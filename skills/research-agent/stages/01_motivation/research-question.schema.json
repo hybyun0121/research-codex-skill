@@ -6,9 +6,32 @@
   "properties": {
     "question": { "type": "string" },
     "domain": { "type": ["string", "null"] },
+    "subfield": { "type": ["string", "null"] },
     "target_venue_level": { "type": ["string", "null"] },
+    "target_venues": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
     "constraints": { "type": "array", "items": { "type": "string" } },
-    "seed_baseline": { "type": ["string", "null"] }
+    "seed_baseline": { "type": ["string", "null"] },
+    "seed_papers": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "search_facets": {
+      "type": "object",
+      "properties": {
+        "tasks": { "type": "array", "items": { "type": "string" } },
+        "method_families": { "type": "array", "items": { "type": "string" } },
+        "datasets": { "type": "array", "items": { "type": "string" } },
+        "failure_modes": { "type": "array", "items": { "type": "string" } },
+        "time_window": { "type": ["string", "null"] },
+        "keywords": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "user_topic_criteria": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
   }
 }
-

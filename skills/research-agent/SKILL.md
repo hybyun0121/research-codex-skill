@@ -17,12 +17,12 @@ Always read `commands/research-agent.md` before acting. It defines the command b
 
 The research workflow is explicitly separated into four stage folders:
 
-- `stages/01_motivation/`: literature landscape, novelty criteria, gaps, and selected direction.
+- `stages/01_motivation/`: MCP-assisted paper discovery, literature landscape, novelty criteria, candidate scoring, gaps, and selected direction.
 - `stages/02_method/`: method claim, mathematical formulation, rigor review, pseudocode, and visuals.
 - `stages/03_experiments/`: benchmark planning, sweeps, leaderboard, and qualitative analysis.
 - `stages/04_slides/`: professor-facing English PPT creation with user template and Gothic A1.
 
-Each stage folder owns its stage instructions, schema files, and markdown or PPT template notes.
+Each stage folder owns its stage instructions, schema files, and markdown or PPT template notes. Motivation also includes `mcp-requirements.md` because it depends on paper search, paper reading, citation graph, literature memory, and user decision capabilities.
 
 ## Shared Instructions
 

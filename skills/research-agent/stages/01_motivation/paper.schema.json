@@ -4,17 +4,34 @@
   "type": "object",
   "required": ["title"],
   "properties": {
+    "paper_id": { "type": ["string", "null"] },
     "title": { "type": "string" },
     "authors": { "type": "array", "items": { "type": "string" } },
     "venue": { "type": ["string", "null"] },
     "year": { "type": ["integer", "null"] },
     "url": { "type": ["string", "null"] },
+    "pdf_url": { "type": ["string", "null"] },
+    "code_url": { "type": ["string", "null"] },
+    "source": {
+      "type": "string",
+      "enum": ["semantic_scholar", "openalex", "arxiv", "crossref", "manual", "other"]
+    },
     "task": { "type": ["string", "null"] },
     "method": { "type": ["string", "null"] },
+    "method_family": { "type": ["string", "null"] },
+    "datasets": { "type": "array", "items": { "type": "string" } },
+    "metrics": { "type": "array", "items": { "type": "string" } },
     "main_contribution": { "type": ["string", "null"] },
     "main_table": { "type": ["string", "null"] },
+    "main_result": { "type": ["string", "null"] },
     "limitation": { "type": ["string", "null"] },
-    "use_for": { "type": "array", "items": { "type": "string" } }
+    "future_work": { "type": ["string", "null"] },
+    "novelty_opportunity": { "type": ["string", "null"] },
+    "citation_count": { "type": ["integer", "null"] },
+    "influential_citation_count": { "type": ["integer", "null"] },
+    "references": { "type": "array", "items": { "type": "string" } },
+    "citations": { "type": "array", "items": { "type": "string" } },
+    "use_for": { "type": "array", "items": { "type": "string" } },
+    "evidence_notes": { "type": "array", "items": { "type": "string" } }
   }
 }
-

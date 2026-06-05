@@ -13,8 +13,14 @@ skills/research-agent/
 ├── stages/
 │   ├── 01_motivation/
 │   │   ├── instructions.md
+│   │   ├── mcp-requirements.md
+│   │   ├── report-template.md
+│   │   ├── report-checklist.md
 │   │   ├── research-question.schema.json
 │   │   ├── paper.schema.json
+│   │   ├── landscape.schema.json
+│   │   ├── motivation-report.schema.json
+│   │   ├── candidate-topic.schema.json
 │   │   └── template.md
 │   ├── 02_method/
 │   │   ├── instructions.md
@@ -43,7 +49,7 @@ HTML brief generation is a shared synthesis step because it renders the accumula
 Clone this skill repository:
 
 ```bash
-git clone https://github.com/<org>/research-agent-skill.git
+git clone https://github.com/hybyun0121/research-codex-skill.git
 ```
 
 Open your actual research project:
@@ -67,7 +73,7 @@ You can vendor the skill into a research repo:
 
 ```bash
 mkdir -p .codex/skills
-cp -r ../research-agent-skill/skills/research-agent .codex/skills/
+cp -r ../research-codex-skill/skills/research-agent .codex/skills/
 codex
 ```
 
