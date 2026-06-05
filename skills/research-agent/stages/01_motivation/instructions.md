@@ -19,7 +19,8 @@ During the Motivation stage, talk with the user in Korean/English mixed style:
 - Use Korean for ordinary explanation, guidance, progress updates, and user-facing questions.
 - When asking the user to choose, write the reason and recommendation in Korean while keeping option labels technically precise.
 - Preserve paper titles, venue names, benchmark names, dataset names, and quoted source terms in their original language.
-- If an artifact explicitly requires English, such as final slides, keep that artifact in English. `research/motivation.md` may use English section headings and technical terms, but explanatory notes for the user can be Korean/English mixed unless the user requests English-only.
+- If an artifact explicitly requires English, such as final slides, keep that artifact in English.
+- Motivation report must have both English and Korean versions. Keep technical terms, paper titles, venue names, benchmark names, dataset names, and method names in English in both versions unless a standard Korean translation exists.
 
 Example question style:
 
@@ -98,10 +99,13 @@ The selected direction must include:
 
 At the end of this stage, write a user-readable Motivation report and a structured report object:
 
-- `research/motivation.md`: readable report based on `report-template.md`;
+- `research/motivation.md`: English-readable report based on `report-template.md`;
+- `research/motivation.ko.md`: Korean-readable report based on `report-template.ko.md`;
 - `.research-agent/motivation_report.json`: structured report following `motivation-report.schema.json`.
 
 The report must include `Tool Usage And Provenance`. Record every MCP, web, local script, or manual import used for paper search, paper reading, citation graph exploration, novelty scoring, and user elicitation.
+
+The Korean version must preserve evidence links and tool provenance exactly. Do not translate paper titles, venue names, benchmark names, dataset names, method names, or metric names unless a field-standard Korean name exists.
 
 Before marking Motivation complete, check `report-checklist.md`.
 
@@ -121,3 +125,4 @@ Write `research/motivation.md` and update:
 - `motivation.selected_direction_handoff`
 - `motivation.tool_usage`
 - `motivation.report_path`
+- `motivation.report_path_ko`

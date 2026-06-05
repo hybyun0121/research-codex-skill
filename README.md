@@ -15,6 +15,7 @@ skills/research-agent/
 │   │   ├── instructions.md
 │   │   ├── mcp-requirements.md
 │   │   ├── report-template.md
+│   │   ├── report-template.ko.md
 │   │   ├── report-checklist.md
 │   │   ├── research-question.schema.json
 │   │   ├── paper.schema.json
