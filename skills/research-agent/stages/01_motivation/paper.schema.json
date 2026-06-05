@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Paper",
+  "type": "object",
+  "required": ["title"],
+  "properties": {
+    "title": { "type": "string" },
+    "authors": { "type": "array", "items": { "type": "string" } },
+    "venue": { "type": ["string", "null"] },
+    "year": { "type": ["integer", "null"] },
+    "url": { "type": ["string", "null"] },
+    "task": { "type": ["string", "null"] },
+    "method": { "type": ["string", "null"] },
+    "main_contribution": { "type": ["string", "null"] },
+    "main_table": { "type": ["string", "null"] },
+    "limitation": { "type": ["string", "null"] },
+    "use_for": { "type": "array", "items": { "type": "string" } }
+  }
+}
+

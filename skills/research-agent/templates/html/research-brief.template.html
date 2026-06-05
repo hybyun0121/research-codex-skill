@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$title</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5d6678;
+      --line: #d9dee8;
+      --paper: #ffffff;
+      --band: #f5f7fb;
+      --accent: #2563eb;
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, "Gothic A1", Arial, sans-serif;
+      line-height: 1.55;
+    }
+    header, section {
+      padding: 32px max(24px, calc((100vw - 1080px) / 2));
+    }
+    header {
+      background: var(--band);
+      border-bottom: 1px solid var(--line);
+    }
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+    p {
+      margin: 0 0 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 24px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--band);
+    }
+    a {
+      color: var(--accent);
+    }
+    pre {
+      overflow: auto;
+      padding: 14px;
+      background: #111827;
+      color: #f9fafb;
+    }
+    .muted {
+      color: var(--muted);
+    }
+    .callout {
+      margin: 16px 0;
+      padding: 12px 16px;
+      background: var(--band);
+      border-left: 4px solid var(--accent);
+    }
+  </style>
+</head>
+<body>
+$body
+</body>
+</html>
+

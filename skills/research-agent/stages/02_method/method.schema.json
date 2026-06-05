@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Method Spec",
+  "type": "object",
+  "properties": {
+    "claim": { "type": ["string", "null"] },
+    "inputs": { "type": "array", "items": { "type": "string" } },
+    "outputs": { "type": "array", "items": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "formulation": { "type": ["string", "null"] },
+    "objective": { "type": ["string", "null"] },
+    "algorithm": { "type": ["string", "null"] },
+    "visuals": { "type": "array", "items": { "type": "string" } },
+    "rigor_review": { "type": "array", "items": { "type": "string" } },
+    "comparison_to_prior_work": { "type": "array", "items": { "type": "string" } }
+  }
+}
+

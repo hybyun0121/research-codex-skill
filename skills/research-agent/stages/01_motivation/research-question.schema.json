@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research Question",
+  "type": "object",
+  "required": ["question"],
+  "properties": {
+    "question": { "type": "string" },
+    "domain": { "type": ["string", "null"] },
+    "target_venue_level": { "type": ["string", "null"] },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "seed_baseline": { "type": ["string", "null"] }
+  }
+}
+

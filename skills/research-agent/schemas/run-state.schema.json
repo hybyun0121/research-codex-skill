@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research Agent Run State",
+  "type": "object",
+  "required": ["schema_version", "project", "research", "workflow", "artifacts", "decisions", "open_questions"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "project": {
+      "type": "object",
+      "required": ["repo_type", "repo_name", "baseline_detected", "baseline_source"],
+      "properties": {
+        "repo_type": {
+          "type": "string",
+          "enum": ["unknown", "empty_repo", "existing_user_project", "official_baseline", "partial_research_agent_project"]
+        },
+        "repo_name": { "type": ["string", "null"] },
+        "baseline_detected": { "type": "boolean" },
+        "baseline_source": { "type": ["string", "null"] },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "research": {
+      "type": "object",
+      "properties": {
+        "question": { "type": ["string", "null"] },
+        "domain": { "type": ["string", "null"] },
+        "target_venue_level": { "type": ["string", "null"] },
+        "selected_direction": { "type": ["string", "null"] }
+      }
+    },
+    "motivation": { "type": "object" },
+    "method": { "type": "object" },
+    "experiments": { "type": "object" },
+    "workflow": {
+      "type": "object",
+      "required": ["current_stage", "stages"],
+      "properties": {
+        "current_stage": { "type": "string" },
+        "stages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["status", "outputs"],
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["not_started", "in_progress", "blocked", "complete", "stale"]
+              },
+              "blocked_by": { "type": "array", "items": { "type": "string" } },
+              "outputs": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "status_md": { "type": "string" },
+        "motivation_md": { "type": "string" },
+        "method_md": { "type": "string" },
+        "experiments_md": { "type": "string" },
+        "html_brief": { "type": "string" },
+        "slides": { "type": "string" }
+      }
+    },
+    "decisions": { "type": "array", "items": { "type": "object" } },
+    "open_questions": { "type": "array", "items": { "type": "object" } }
+  }
+}
+

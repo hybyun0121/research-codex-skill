@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Leaderboard",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["experiment_id", "method_variant", "dataset", "status"],
+    "properties": {
+      "experiment_id": { "type": "string" },
+      "method_variant": { "type": "string" },
+      "dataset": { "type": "string" },
+      "metrics": { "type": "object" },
+      "confidence_or_variance": { "type": ["string", "null"] },
+      "runtime_or_cost": { "type": ["string", "null"] },
+      "status": { "type": "string" },
+      "notes": { "type": ["string", "null"] },
+      "reference": { "type": ["string", "null"] }
+    }
+  }
+}
+

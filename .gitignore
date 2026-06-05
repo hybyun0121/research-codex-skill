@@ -1,0 +1,47 @@
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+*token*
+*secret*
+*credential*
+*password*
+credentials/
+secrets/
+
+# Local runs and generated artifacts
+.research-agent/
+research/
+slides/
+outputs/
+runs/
+worktrees/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Node/build outputs
+node_modules/
+dist/
+build/
+.next/
+.vite/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+

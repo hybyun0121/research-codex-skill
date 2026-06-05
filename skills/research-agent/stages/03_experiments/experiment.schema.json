@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experiment Plan",
+  "type": "object",
+  "properties": {
+    "claims": { "type": "array", "items": { "type": "string" } },
+    "plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim": { "type": "string" },
+          "dataset": { "type": "string" },
+          "metric": { "type": "string" },
+          "baseline": { "type": "string" },
+          "evidence": { "type": "string" },
+          "reference": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "sweeps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "values": { "type": "array" },
+          "default": {},
+          "budget": { "type": ["string", "null"] },
+          "stopping_rule": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "qualitative": { "type": "array", "items": { "type": "string" } },
+    "risks": { "type": "array", "items": { "type": "string" } }
+  }
+}
+
