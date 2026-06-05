@@ -18,6 +18,49 @@ def now() -> str:
 def default_state(profile: dict[str, object]) -> dict[str, object]:
     repo_type = str(profile.get("repo_type") or "unknown")
     baseline_detected = bool(profile.get("baseline_detected"))
+    stages = {
+        "repo_inspection": {
+            "status": "complete",
+            "outputs": [".research-agent/repo_profile.json"],
+        },
+        "motivation": {
+            "status": "blocked",
+            "blocked_by": ["research.question"],
+            "outputs": ["research/motivation.md"],
+        },
+        "method": {
+            "status": "blocked",
+            "blocked_by": ["research.selected_direction"],
+            "outputs": ["research/method.md"],
+        },
+        "experiments": {
+            "status": "blocked",
+            "blocked_by": ["method.spec"],
+            "outputs": ["research/experiments.md"],
+        },
+        "html_brief": {
+            "status": "blocked",
+            "blocked_by": ["motivation", "method", "experiments"],
+            "outputs": ["research/research-brief.html"],
+        },
+        "slides": {
+            "status": "blocked",
+            "blocked_by": ["html_brief"],
+            "outputs": ["slides/research-presentation.pptx"],
+        },
+    }
+    current_stage = "repo_inspection"
+    if repo_type == "empty_repo":
+        stages["goal_instruction"] = {
+            "status": "blocked",
+            "blocked_by": ["user.goal_instruction_start_choice"],
+            "outputs": [
+                ".research-agent/goal_instruction.md",
+                ".research-agent/goal_instruction.json",
+            ],
+        }
+        current_stage = "goal_instruction"
+
     return {
         "schema_version": "0.1.0",
         "project": {
@@ -49,40 +92,12 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
             "risks": [],
         },
         "workflow": {
-            "current_stage": "repo_inspection",
-            "stages": {
-                "repo_inspection": {
-                    "status": "complete",
-                    "outputs": [".research-agent/repo_profile.json"],
-                },
-                "motivation": {
-                    "status": "blocked",
-                    "blocked_by": ["research.question"],
-                    "outputs": ["research/motivation.md"],
-                },
-                "method": {
-                    "status": "blocked",
-                    "blocked_by": ["research.selected_direction"],
-                    "outputs": ["research/method.md"],
-                },
-                "experiments": {
-                    "status": "blocked",
-                    "blocked_by": ["method.spec"],
-                    "outputs": ["research/experiments.md"],
-                },
-                "html_brief": {
-                    "status": "blocked",
-                    "blocked_by": ["motivation", "method", "experiments"],
-                    "outputs": ["research/research-brief.html"],
-                },
-                "slides": {
-                    "status": "blocked",
-                    "blocked_by": ["html_brief"],
-                    "outputs": ["slides/research-presentation.pptx"],
-                },
-            },
+            "current_stage": current_stage,
+            "stages": stages,
         },
         "artifacts": {
+            "goal_instruction_md": ".research-agent/goal_instruction.md",
+            "goal_instruction_json": ".research-agent/goal_instruction.json",
             "status_md": "research/status.md",
             "motivation_md": "research/motivation.md",
             "method_md": "research/method.md",
@@ -136,7 +151,7 @@ def main() -> None:
     write_if_missing(
         research_dir / "status.md",
         "# Research Agent Status\n\n"
-        f"- Current stage: repo_inspection\n"
+        f"- Current stage: {state['workflow']['current_stage']}\n"
         f"- Repository type: {profile.get('repo_type')}\n"
         "- Next action: resolve the first blocking research decision.\n",
     )
@@ -149,4 +164,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

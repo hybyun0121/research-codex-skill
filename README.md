@@ -4,12 +4,18 @@ A portable Codex Skill for running an end-to-end research workflow inside any re
 
 Use it when you want Codex to inspect a local research project, understand its current state, and guide the process from Motivation to Method, Experiments, HTML brief, and final presentation slides.
 
+For empty repositories, `research-agent` can first run a goal-instruction discussion. That discussion helps the user define automation scope, then recommends several candidate `goal instruction` options for topic selection, Method construction, toy Experiments, and slide/report creation.
+
 ## Skill Structure
 
-The skill separates the research workflow into four explicit stage folders:
+The skill separates the research workflow into four explicit stage folders, with an optional goal-instructor module for empty repo onboarding:
 
 ```text
 skills/research-agent/
+├── goal-instructor/
+│   ├── instructions/
+│   ├── schemas/
+│   └── templates/
 ├── stages/
 │   ├── 01_motivation/
 │   │   ├── instructions.md
@@ -63,8 +69,10 @@ codex
 Run:
 
 ```text
-/research-agent
+$research-agent
 ```
+
+You can also type `/skills` and select `research-agent`.
 
 The agent will inspect the repository, determine whether it is an empty repo, an existing research project, an official baseline implementation, or a partially completed research-agent project, then continue from the next required stage.
 
@@ -73,15 +81,21 @@ The agent will inspect the repository, determine whether it is an empty repo, an
 You can vendor the skill into a research repo:
 
 ```bash
-mkdir -p .codex/skills
-cp -r ../research-codex-skill/skills/research-agent .codex/skills/
+mkdir -p .agents/skills
+cp -r ../research-codex-skill/skills/research-agent .agents/skills/
 codex
 ```
 
 Then run:
 
 ```text
-/research-agent
+$research-agent
+```
+
+For an empty repo, the agent will ask whether you want to start with a goal-instruction discussion. If selected, it will recommend several candidate `goal instruction` options before continuing to Motivation.
+
+```text
+Use $research-agent to inspect this empty repo and discuss goal instruction options before starting Motivation.
 ```
 
 ## Files Generated In The Research Repo
@@ -93,7 +107,9 @@ The skill keeps outputs minimal:
 ├── state.json
 ├── config.json
 ├── repo_profile.json
-└── decisions.jsonl
+├── decisions.jsonl
+├── goal_instruction.md
+└── goal_instruction.json
 research/
 ├── status.md
 ├── motivation.md

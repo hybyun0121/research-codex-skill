@@ -9,12 +9,13 @@ This command helps the user conduct an end-to-end research workflow inside the c
 The workflow includes:
 
 1. Repository inspection
-2. Research question setup
-3. Motivation
-4. Method
-5. Experiments
-6. HTML research brief
-7. Slides
+2. Optional goal instruction discussion for empty repos
+3. Research question setup
+4. Motivation
+5. Method
+6. Experiments
+7. HTML research brief
+8. Slides
 
 The four explicit research stages live under:
 
@@ -52,6 +53,8 @@ Look for:
 If state exists, resume from the earliest incomplete or stale stage.
 
 If state does not exist, initialize it with `scripts/init_run.py`.
+
+If the repository is `empty_repo`, ask whether the user wants to start with a goal instruction discussion before Motivation. If yes, load `goal-instructor/instructions/goal-design.md`, discuss the automation target, then recommend multiple candidate goal instructions and ask the user to select one.
 
 ## Repository Safety
 
@@ -94,6 +97,8 @@ Default generated files:
 - `.research-agent/config.json`
 - `.research-agent/repo_profile.json`
 - `.research-agent/decisions.jsonl`
+- `.research-agent/goal_instruction.md` when goal discussion is selected
+- `.research-agent/goal_instruction.json` when goal discussion is selected
 - `research/status.md`
 - `research/motivation.md`
 - `research/method.md`

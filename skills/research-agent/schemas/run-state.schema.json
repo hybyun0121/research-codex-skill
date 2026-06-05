@@ -56,6 +56,8 @@
     "artifacts": {
       "type": "object",
       "properties": {
+        "goal_instruction_md": { "type": "string" },
+        "goal_instruction_json": { "type": "string" },
         "status_md": { "type": "string" },
         "motivation_md": { "type": "string" },
         "method_md": { "type": "string" },
@@ -68,4 +70,3 @@
     "open_questions": { "type": "array", "items": { "type": "object" } }
   }
 }
-
