@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Example Experiment Detail Plan</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5d6678;
+      --line: #d9dee8;
+      --paper: #ffffff;
+      --band: #f5f7fb;
+      --accent: #2563eb;
+      --warn: #9a3412;
+      --good: #166534;
+    }
+    body {
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, "Gothic A1", Arial, sans-serif;
+      line-height: 1.5;
+      margin: 0;
+    }
+    header, main {
+      padding: 28px max(20px, calc((100vw - 1180px) / 2));
+    }
+    header {
+      background: var(--band);
+      border-bottom: 1px solid var(--line);
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 12px;
+    }
+    section {
+      border-bottom: 1px solid var(--line);
+      padding: 26px 0;
+    }
+    table {
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 14px 0 22px;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--band); }
+    a { color: var(--accent); }
+    code {
+      background: var(--band);
+      border: 1px solid var(--line);
+      padding: 1px 4px;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      overflow: auto;
+      padding: 14px;
+    }
+    .toolbar {
+      align-items: center;
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      margin-top: 18px;
+    }
+    .toggle {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      display: inline-flex;
+    }
+    .toggle button {
+      background: transparent;
+      border: 0;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      padding: 8px 12px;
+    }
+    .toggle button.active {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .muted { color: var(--muted); }
+    .callout {
+      background: #eef4ff;
+      border-left: 4px solid var(--accent);
+      margin: 14px 0;
+      padding: 12px 14px;
+    }
+    .warning {
+      background: #fff7ed;
+      border-left-color: var(--warn);
+    }
+    .ok {
+      background: #f0fdf4;
+      border-left-color: var(--good);
+    }
+    .summary-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      margin-top: 18px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 12px;
+    }
+    .metric strong {
+      display: block;
+      font-size: 22px;
+      margin-top: 4px;
+    }
+    [data-lang="ko"] .en,
+    [data-lang="en"] .ko {
+      display: none;
+    }
+  </style>
+</head>
+<body data-lang="en">
+  <header>
+    <p class="muted">Research Agent Experiments - Example Output</p>
+    <h1>Uncertainty-Aware Adaptive Decoding For Factual Open LLMs</h1>
+    <p class="en">This example shows how the improved experiments stage should present baselines, GPU budgeting, toy execution approval, reference-code reuse, and leaderboard updates.</p>
+    <p class="ko">이 예시는 개선된 experiments 단계가 baseline, GPU 예산, toy 실험 승인, reference 코드 재사용, leaderboard 갱신을 어떻게 보여줘야 하는지 설명합니다.</p>
+    <div class="toolbar">
+      <div class="toggle" aria-label="Language toggle">
+        <button type="button" class="active" data-set-lang="en">English</button>
+        <button type="button" data-set-lang="ko">한국어</button>
+      </div>
+      <span class="muted en">Example values are placeholders. Verify paper tables before citation.</span>
+      <span class="muted ko">예시 값은 placeholder입니다. 최종 인용 전 논문 표를 검증해야 합니다.</span>
+    </div>
+    <div class="summary-grid">
+      <div class="metric"><span class="en">Baseline rows</span><span class="ko">Baseline 수</span><strong>8</strong></div>
+      <div class="metric"><span class="en">Toy benchmarks</span><span class="ko">Toy 벤치마크</span><strong>2</strong></div>
+      <div class="metric"><span class="en">Full benchmarks</span><span class="ko">Full 벤치마크</span><strong>3</strong></div>
+      <div class="metric"><span class="en">Toy budget</span><span class="ko">Toy 예산</span><strong>1.5 GPU-h</strong></div>
+      <div class="metric"><span class="en">Full budget</span><span class="ko">Full 예산</span><strong>42 GPU-h</strong></div>
+      <div class="metric"><span class="en">Next action</span><span class="ko">다음 단계</span><strong>Toy approval</strong></div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2><span class="en">Evaluation Claims</span><span class="ko">평가 주장</span></h2>
+      <ul>
+        <li class="en">Adaptive routing improves factuality at matched inference cost.</li>
+        <li class="ko">Adaptive routing은 동일 inference cost에서 factuality를 개선합니다.</li>
+        <li class="en">Uncertainty predicts when expensive verification is worth using.</li>
+        <li class="ko">Uncertainty는 비싼 verification을 사용할 가치가 있는 prompt를 예측합니다.</li>
+        <li class="en">The method creates a better factuality-cost Pareto frontier than fixed verification.</li>
+        <li class="ko">제안 방법은 fixed verification보다 더 나은 factuality-cost Pareto frontier를 만듭니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="en">Baselines And Prior Results</span><span class="ko">베이스라인 및 선행 결과</span></h2>
+      <div class="callout warning">
+        <span class="en">Reported results are marked as needs_source_check until the original tables are verified.</span>
+        <span class="ko">원 논문 표 검증 전까지 reported result는 needs_source_check로 표시합니다.</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th><th>Paper</th><th>Venue/Year</th><th>Source Table</th><th>Dataset</th><th>Metric</th><th>Reported Result</th><th>Paper</th><th>Hugging Face</th><th>GitHub</th><th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>TruthfulQA reported baselines</td><td>TruthfulQA</td><td>ACL 2022</td><td>main table</td><td>TruthfulQA</td><td>truthfulness</td><td>needs_source_check</td><td><a href="https://arxiv.org/abs/2109.07958">paper</a></td><td><a href="https://huggingface.co/datasets/truthfulqa/truthful_qa">dataset</a></td><td><a href="https://github.com/sylinrl/TruthfulQA">repo</a></td><td>benchmark anchor</td></tr>
+          <tr><td>SelfCheckGPT</td><td>SelfCheckGPT</td><td>EMNLP 2023</td><td>main table</td><td>WikiBio-style generation</td><td>AUC</td><td>needs_source_check</td><td><a href="https://arxiv.org/abs/2303.08896">paper</a></td><td></td><td><a href="https://github.com/potsawee/selfcheckgpt">repo</a></td><td>reference code candidate</td></tr>
+          <tr><td>HaluEval baselines</td><td>HaluEval</td><td>ACL 2023</td><td>main table</td><td>HaluEval</td><td>hallucination accuracy</td><td>needs_source_check</td><td><a href="https://arxiv.org/abs/2305.11747">paper</a></td><td><a href="https://huggingface.co/datasets/pminervini/HaluEval">dataset</a></td><td><a href="https://github.com/RUCAIBox/HaluEval">repo</a></td><td>full benchmark</td></tr>
+          <tr><td>HELM factuality slice</td><td>HELM</td><td>TMLR 2023</td><td>scenario tables</td><td>HELM scenarios</td><td>accuracy / calibration</td><td>needs_source_check</td><td><a href="https://arxiv.org/abs/2211.09110">paper</a></td><td></td><td><a href="https://github.com/stanford-crfm/helm">repo</a></td><td>evaluation harness</td></tr>
+          <tr><td>Open LLM Leaderboard reference</td><td>Open LLM Leaderboard</td><td>HF collection</td><td>leaderboard</td><td>leaderboard tasks</td><td>aggregate score</td><td>needs_source_check</td><td><a href="https://huggingface.co/open-llm-leaderboard">collection</a></td><td><a href="https://huggingface.co/open-llm-leaderboard/collections">collection</a></td><td></td><td>model selection</td></tr>
+          <tr><td>Fixed greedy decoding</td><td>Internal baseline</td><td>control</td><td>n/a</td><td>all</td><td>quality / cost</td><td>to_run</td><td></td><td></td><td></td><td>simple control</td></tr>
+          <tr><td>Fixed sampling</td><td>Internal baseline</td><td>control</td><td>n/a</td><td>all</td><td>quality / cost</td><td>to_run</td><td></td><td></td><td></td><td>decoding control</td></tr>
+          <tr><td>No uncertainty routing</td><td>Proposed ablation</td><td>ablation</td><td>n/a</td><td>all</td><td>Pareto frontier</td><td>to_run</td><td></td><td></td><td></td><td>novelty isolation</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span class="en">Benchmark Plan</span><span class="ko">벤치마크 계획</span></h2>
+      <table>
+        <thead><tr><th>Tier</th><th>Dataset</th><th>Purpose</th><th>Metric</th><th>Baselines</th><th>Success Criterion</th></tr></thead>
+        <tbody>
+          <tr><td>toy</td><td>TruthfulQA subset, 64 prompts</td><td>debug evaluator, routing, logging</td><td>truthfulness proxy, tokens, latency</td><td>greedy, fixed sampling, adaptive</td><td>all outputs logged and leaderboard row generated</td></tr>
+          <tr><td>toy</td><td>HaluEval subset, 64 examples</td><td>test hallucination detector integration</td><td>detection accuracy, cost</td><td>SelfCheck-style, adaptive</td><td>reference repo wrapper runs end-to-end</td></tr>
+          <tr><td>full</td><td>TruthfulQA</td><td>main factuality benchmark</td><td>truthfulness, informativeness, cost</td><td>published, greedy, sampling, SelfCheck, adaptive</td><td>mean/std over 3 seeds</td></tr>
+          <tr><td>full</td><td>HaluEval</td><td>hallucination detection validity</td><td>accuracy, F1, AUC</td><td>published, SelfCheck, adaptive</td><td>source-table comparable metrics</td></tr>
+          <tr><td>full</td><td>HELM factuality scenarios</td><td>broader robustness check</td><td>scenario metrics, calibration</td><td>HELM baselines, adaptive</td><td>consistent ranking across scenarios</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span class="en">GPU Budget And Recommendation</span><span class="ko">GPU 예산 및 추천</span></h2>
+      <table>
+        <thead><tr><th>GPU</th><th>Count</th><th>Memory</th><th>Best Use</th><th>Constraint</th></tr></thead>
+        <tbody>
+          <tr><td>RTX 4090</td><td>4</td><td>24GB</td><td>toy runs, small 1B-7B models, parallel sweeps</td><td>limited long-context or multi-sample memory</td></tr>
+          <tr><td>RTX A6000</td><td>1</td><td>48GB</td><td>medium 7B-13B inference, stable single-GPU baselines</td><td>only one card</td></tr>
+          <tr><td>RTX PRO 6000 Blackwell Server Edition</td><td>3</td><td>96GB</td><td>large models, long context, full multi-sample verification</td><td>reserve for memory-heavy runs</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>Experiment</th><th>Tier</th><th>Recommended GPU</th><th>Memory Need</th><th>Margin</th><th>Runtime</th><th>GPU-Hours</th><th>Fallback</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td>TruthfulQA 64-prompt smoke test</td><td>toy</td><td>1x RTX 4090</td><td>12-18GB</td><td>6GB+</td><td>20-30 min</td><td>0.5</td><td>smaller model or CPU evaluator only</td><td>smallest GPU with enough headroom</td></tr>
+          <tr><td>HaluEval wrapper test</td><td>toy</td><td>1x RTX 4090</td><td>14-20GB</td><td>4GB+</td><td>30-45 min</td><td>0.75</td><td>reduce batch size</td><td>validates reference-code reuse cheaply</td></tr>
+          <tr><td>TruthfulQA full 7B x 3 seeds</td><td>full</td><td>2x RTX 4090 or 1x A6000</td><td>22-40GB</td><td>depends on batch/context</td><td>6-10 hr</td><td>12-20</td><td>single seed first</td><td>parallelize seeds if 4090 memory fits</td></tr>
+          <tr><td>Long-context verification</td><td>full</td><td>1x RTX PRO 6000 96GB</td><td>55-80GB</td><td>16GB+</td><td>8-12 hr</td><td>8-12</td><td>shorten context or quantize</td><td>96GB memory avoids truncation</td></tr>
+          <tr><td>Sweep top 2 thresholds</td><td>sweep</td><td>3x RTX PRO 6000 or 4x RTX 4090</td><td>20-70GB</td><td>model dependent</td><td>4-8 hr</td><td>12-24</td><td>run only best threshold</td><td>parallel threshold evaluation</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span class="en">Toy Approval, Reference Code, And Run Plan</span><span class="ko">Toy 승인, Reference 코드, 실행 계획</span></h2>
+      <div class="callout warning">
+        <span class="en">The agent must stop here and ask the user before running GPU-consuming toy experiments.</span>
+        <span class="ko">GPU를 사용하는 toy 실험 전에는 여기서 멈추고 사용자 승인 여부를 물어야 합니다.</span>
+      </div>
+      <table>
+        <thead><tr><th>Source Paper</th><th>GitHub Repo</th><th>Use Check</th><th>Local Path</th><th>Files To Adapt</th><th>Setup</th><th>Toy Run</th><th>Fallback</th></tr></thead>
+        <tbody>
+          <tr><td>SelfCheckGPT</td><td><a href="https://github.com/potsawee/selfcheckgpt">repo</a></td><td>inspect license and requirements before use</td><td>external/reference-code/selfcheckgpt</td><td>toy config, dataset loader wrapper, result exporter</td><td><code>pip install -r requirements.txt</code></td><td><code>python experiments/toy_selfcheck.py --limit 64</code></td><td>implement minimal consistency scoring wrapper</td></tr>
+          <tr><td>TruthfulQA</td><td><a href="https://github.com/sylinrl/TruthfulQA">repo</a></td><td>inspect evaluator entrypoint</td><td>external/reference-code/truthfulqa</td><td>prompt subset, model adapter, metric writer</td><td><code>pip install -e .</code></td><td><code>python experiments/toy_truthfulqa.py --limit 64</code></td><td>use HF dataset with local evaluator</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>Step</th><th>Command/Action</th><th>Expected Output</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Ask user</td><td>Offer setup-only, setup+toy-run, or decline</td><td>approval decision</td><td>planned</td><td>recommended: setup-only smoke test</td></tr>
+          <tr><td>Clone reference code</td><td><code>git clone &lt;repo&gt; external/reference-code/&lt;name&gt;</code></td><td>reference repo available</td><td>planned</td><td>requires network approval</td></tr>
+          <tr><td>Inspect repo</td><td>read README, license, requirements, entrypoints</td><td>reuse decision</td><td>planned</td><td>avoid secrets and private data</td></tr>
+          <tr><td>Create toy wrapper</td><td>add minimal config and exporter</td><td>toy script and result path</td><td>planned</td><td>keep changes isolated</td></tr>
+          <tr><td>Run toy</td><td><code>CUDA_VISIBLE_DEVICES=&lt;4090&gt; python experiments/toy_run.py --limit 64</code></td><td>logs and metrics</td><td>blocked</td><td>only after user approval</td></tr>
+          <tr><td>Summarize</td><td>update leaderboard and detail HTML</td><td>toy result interpretation</td><td>planned</td><td>recommend next full run</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span class="en">Leaderboard</span><span class="ko">리더보드</span></h2>
+      <table>
+        <thead><tr><th>ID</th><th>Method</th><th>Paper</th><th>GitHub</th><th>HF</th><th>Dataset</th><th>Metrics</th><th>GPU</th><th>Status</th><th>Artifact</th></tr></thead>
+        <tbody>
+          <tr><td>prior-truthfulqa</td><td>TruthfulQA reported baselines</td><td>TruthfulQA</td><td><a href="https://github.com/sylinrl/TruthfulQA">repo</a></td><td><a href="https://huggingface.co/datasets/truthfulqa/truthful_qa">dataset</a></td><td>TruthfulQA</td><td>needs_source_check</td><td>n/a</td><td>reference</td><td>experiments-detail.html</td></tr>
+          <tr><td>prior-selfcheck</td><td>SelfCheckGPT</td><td>SelfCheckGPT</td><td><a href="https://github.com/potsawee/selfcheckgpt">repo</a></td><td></td><td>WikiBio-style</td><td>needs_source_check</td><td>n/a</td><td>reference</td><td>experiments-detail.html</td></tr>
+          <tr><td>toy-adaptive-truthfulqa</td><td>Adaptive routing</td><td>ours</td><td></td><td><a href="https://huggingface.co/datasets/truthfulqa/truthful_qa">dataset</a></td><td>TruthfulQA subset</td><td>pending</td><td>1x RTX 4090</td><td>blocked_until_user_approval</td><td>research/results/toy_truthfulqa.json</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const root = document.body;
+    const buttons = Array.from(document.querySelectorAll("[data-set-lang]"));
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const lang = button.getAttribute("data-set-lang");
+        root.setAttribute("data-lang", lang);
+        buttons.forEach((item) => item.classList.toggle("active", item === button));
+      });
+    });
+  </script>
+</body>
+</html>

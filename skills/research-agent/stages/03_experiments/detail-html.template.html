@@ -3,97 +3,222 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Experiment Detail Plan</title>
+  <title>${title}</title>
   <style>
-    body {
-      color: #1f2937;
-      font-family: Arial, sans-serif;
-      line-height: 1.5;
-      margin: 0 auto;
-      max-width: 1180px;
-      padding: 32px 20px;
+    :root {
+      --ink: #172033;
+      --muted: #5d6678;
+      --line: #d9dee8;
+      --paper: #ffffff;
+      --band: #f5f7fb;
+      --accent: #2563eb;
+      --warn: #9a3412;
+      --good: #166534;
     }
-    h1, h2, h3 { color: #111827; }
+    body {
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, "Gothic A1", Arial, sans-serif;
+      line-height: 1.5;
+      margin: 0;
+    }
+    header, main {
+      padding: 28px max(20px, calc((100vw - 1180px) / 2));
+    }
+    header {
+      background: var(--band);
+      border-bottom: 1px solid var(--line);
+    }
+    h1, h2, h3 {
+      color: var(--ink);
+      line-height: 1.2;
+      margin: 0 0 12px;
+    }
+    section {
+      border-bottom: 1px solid var(--line);
+      padding: 26px 0;
+    }
     table {
       border-collapse: collapse;
-      margin: 16px 0 28px;
+      font-size: 14px;
+      margin: 14px 0 22px;
       width: 100%;
     }
     th, td {
-      border: 1px solid #d1d5db;
+      border: 1px solid var(--line);
       padding: 8px 10px;
       text-align: left;
       vertical-align: top;
     }
-    th { background: #f3f4f6; }
-    .muted { color: #6b7280; }
+    th { background: var(--band); }
+    a { color: var(--accent); }
+    code {
+      background: var(--band);
+      border: 1px solid var(--line);
+      padding: 1px 4px;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      overflow: auto;
+      padding: 14px;
+    }
+    .toolbar {
+      align-items: center;
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      margin-top: 18px;
+    }
+    .toggle {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      display: inline-flex;
+    }
+    .toggle button {
+      background: transparent;
+      border: 0;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      padding: 8px 12px;
+    }
+    .toggle button.active {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .muted { color: var(--muted); }
     .callout {
-      background: #f9fafb;
-      border-left: 4px solid #2563eb;
+      background: #eef4ff;
+      border-left: 4px solid var(--accent);
+      margin: 14px 0;
       padding: 12px 14px;
+    }
+    .warning {
+      background: #fff7ed;
+      border-left-color: var(--warn);
+    }
+    .summary-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      margin-top: 18px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 12px;
+    }
+    .metric strong {
+      display: block;
+      font-size: 22px;
+      margin-top: 4px;
+    }
+    [data-lang="ko"] .en,
+    [data-lang="en"] .ko {
+      display: none;
     }
   </style>
 </head>
-<body>
+<body data-lang="en">
   <header>
     <p class="muted">Research Agent Experiments</p>
     <h1>${title}</h1>
-    <p class="callout">${summary}</p>
+    <p class="en">${summary_en}</p>
+    <p class="ko">${summary_ko}</p>
+    <div class="toolbar">
+      <div class="toggle" aria-label="Language toggle">
+        <button type="button" class="active" data-set-lang="en">English</button>
+        <button type="button" data-set-lang="ko">한국어</button>
+      </div>
+      <span class="muted en">Generated from experiments stage state.</span>
+      <span class="muted ko">Experiments 단계 상태에서 생성된 상세 보고서입니다.</span>
+    </div>
+    <div class="summary-grid">
+      ${summary_cards}
+    </div>
   </header>
 
-  <section>
-    <h2>Evaluation Claims</h2>
-    ${claims}
-  </section>
+  <main>
+    <section>
+      <h2><span class="en">Evaluation Claims</span><span class="ko">평가 주장</span></h2>
+      ${claims}
+    </section>
 
-  <section>
-    <h2>Baseline Sources</h2>
-    ${baseline_sources}
-  </section>
+    <section>
+      <h2><span class="en">Baselines And Prior Results</span><span class="ko">베이스라인 및 선행 결과</span></h2>
+      <p class="en">Include Motivation-table results, recent competitive papers, simple controls, and proposed-method ablations.</p>
+      <p class="ko">Motivation 단계의 논문 표, 최신 경쟁 논문, 단순 control, 제안 방법의 ablation을 함께 포함합니다.</p>
+      ${baseline_sources}
+      ${prior_result_leaderboard}
+    </section>
 
-  <section>
-    <h2>Benchmark Plan</h2>
-    ${benchmark_plan}
-  </section>
+    <section>
+      <h2><span class="en">Benchmark Plan</span><span class="ko">벤치마크 계획</span></h2>
+      ${benchmark_plan}
+      <h3><span class="en">Toy Benchmarks</span><span class="ko">Toy 벤치마크</span></h3>
+      ${toy_benchmarks}
+      <h3><span class="en">Full Benchmarks</span><span class="ko">Full 벤치마크</span></h3>
+      ${full_benchmarks}
+    </section>
 
-  <section>
-    <h2>Toy Benchmarks</h2>
-    ${toy_benchmarks}
-  </section>
+    <section>
+      <h2><span class="en">GPU Budget And Recommendation</span><span class="ko">GPU 예산 및 추천</span></h2>
+      <div class="callout">
+        <span class="en">Default inventory: 4x RTX 4090 24GB, 1x RTX A6000 48GB, 3x RTX PRO 6000 Blackwell Server Edition 96GB.</span>
+        <span class="ko">기본 사용 가능 자원: RTX 4090 24GB 4장, RTX A6000 48GB 1장, RTX PRO 6000 Blackwell Server Edition 96GB 3장.</span>
+      </div>
+      ${gpu_inventory}
+      ${compute_plan}
+      ${budget_summary}
+    </section>
 
-  <section>
-    <h2>Full Benchmarks</h2>
-    ${full_benchmarks}
-  </section>
+    <section>
+      <h2><span class="en">Toy Setup And Execution</span><span class="ko">Toy 환경 세팅 및 실행</span></h2>
+      <div class="callout warning">
+        <span class="en">Ask the user before running GPU-consuming toy experiments. Recommended first action: setup and smoke test only.</span>
+        <span class="ko">GPU를 사용하는 toy 실험은 실행 전에 사용자 허용을 받아야 합니다. 첫 권장 작업은 환경 세팅과 smoke test입니다.</span>
+      </div>
+      <h3><span class="en">Reference Code Reuse</span><span class="ko">Reference 코드 재사용</span></h3>
+      <p class="en">When a relevant paper provides a GitHub repository, use it as the starting point, inspect it, and adapt only the minimal wrapper or config needed for toy experiments.</p>
+      <p class="ko">관련 논문이 GitHub 저장소를 제공한다면 해당 코드를 우선 활용하고, 구조를 점검한 뒤 toy 실험에 필요한 wrapper/config만 최소 수정합니다.</p>
+      ${reference_code_reuse}
+      <h3><span class="en">Toy Run Plan And Results</span><span class="ko">Toy 실행 계획 및 결과</span></h3>
+      ${toy_execution}
+    </section>
 
-  <section>
-    <h2>Ablations</h2>
-    ${ablations}
-  </section>
+    <section>
+      <h2><span class="en">Ablations And Sweeps</span><span class="ko">Ablation 및 Sweep</span></h2>
+      ${ablations}
+      ${sweeps}
+    </section>
 
-  <section>
-    <h2>Hyperparameter Sweeps</h2>
-    ${sweeps}
-  </section>
+    <section>
+      <h2><span class="en">Leaderboard</span><span class="ko">리더보드</span></h2>
+      ${leaderboard}
+    </section>
 
-  <section>
-    <h2>Compute Plan</h2>
-    ${compute_plan}
-  </section>
+    <section>
+      <h2><span class="en">Qualitative Analysis</span><span class="ko">정성 분석</span></h2>
+      ${qualitative}
+    </section>
 
-  <section>
-    <h2>Leaderboard</h2>
-    ${leaderboard}
-  </section>
+    <section>
+      <h2><span class="en">Risks</span><span class="ko">리스크</span></h2>
+      ${risks}
+    </section>
+  </main>
 
-  <section>
-    <h2>Qualitative Analysis</h2>
-    ${qualitative}
-  </section>
-
-  <section>
-    <h2>Risks</h2>
-    ${risks}
-  </section>
+  <script>
+    const root = document.body;
+    const buttons = Array.from(document.querySelectorAll("[data-set-lang]"));
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const lang = button.getAttribute("data-set-lang");
+        root.setAttribute("data-lang", lang);
+        buttons.forEach((item) => item.classList.toggle("active", item === button));
+      });
+    });
+  </script>
 </body>
 </html>

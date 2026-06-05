@@ -28,7 +28,12 @@
           "metric": { "type": "string" },
           "why_competitive": { "type": ["string", "null"] },
           "url": { "type": ["string", "null"] },
-          "huggingface_url": { "type": ["string", "null"] }
+          "huggingface_url": { "type": ["string", "null"] },
+          "github_url": { "type": ["string", "null"] },
+          "code_reuse": {
+            "type": ["string", "null"],
+            "enum": ["preferred", "possible", "not_available", "not_recommended", "unknown", null]
+          }
         }
       }
     },
@@ -47,6 +52,7 @@
           "reported_result": { "type": ["string", "number", "null"] },
           "paper_url": { "type": ["string", "null"] },
           "huggingface_url": { "type": ["string", "null"] },
+          "github_url": { "type": ["string", "null"] },
           "use_in_this_plan": { "type": ["string", "null"] }
         }
       }
@@ -98,6 +104,25 @@
         }
       }
     },
+    "gpu_inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gpu_model", "count", "memory_gb"],
+        "properties": {
+          "gpu_model": { "type": "string" },
+          "count": { "type": "integer" },
+          "memory_gb": { "type": "number" },
+          "best_use": { "type": ["string", "null"] },
+          "constraints": { "type": ["string", "null"] }
+        }
+      },
+      "default": [
+        { "gpu_model": "RTX 4090", "count": 4, "memory_gb": 24 },
+        { "gpu_model": "RTX A6000", "count": 1, "memory_gb": 48 },
+        { "gpu_model": "RTX PRO 6000 Blackwell Server Edition", "count": 3, "memory_gb": 96 }
+      ]
+    },
     "ablations": {
       "type": "array",
       "items": {
@@ -131,17 +156,111 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["tier", "gpu_recommendation", "gpu_count"],
+        "required": ["experiment", "tier", "gpu_recommendation", "gpu_count"],
         "properties": {
+          "experiment": { "type": "string" },
           "tier": { "type": "string", "enum": ["toy", "full", "ablation", "sweep", "qualitative"] },
           "gpu_recommendation": { "type": "string" },
           "gpu_count": { "type": ["integer", "string"] },
+          "required_memory_gb": { "type": ["number", "string", "null"] },
           "memory_need": { "type": ["string", "null"] },
+          "memory_margin": { "type": ["string", "null"] },
           "estimated_runtime": { "type": ["string", "null"] },
+          "gpu_hours": { "type": ["number", "string", "null"] },
           "parallelism": { "type": ["string", "null"] },
           "fallback": { "type": ["string", "null"] },
           "rationale": { "type": ["string", "null"] }
         }
+      }
+    },
+    "budget_summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scope", "recommended_gpu_pool"],
+        "properties": {
+          "scope": { "type": "string" },
+          "runs": { "type": ["integer", "string", "null"] },
+          "recommended_gpu_pool": { "type": "string" },
+          "total_gpu_hours": { "type": ["number", "string", "null"] },
+          "wall_clock_estimate": { "type": ["string", "null"] },
+          "budget_risk": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "reference_code_reuse": {
+      "type": "array",
+      "description": "Plan for adapting code from reference-paper GitHub repositories after user allows toy execution.",
+      "items": {
+        "type": "object",
+        "required": ["source_paper", "github_url", "reuse_decision"],
+        "properties": {
+          "source_paper": { "type": "string" },
+          "github_url": { "type": "string" },
+          "reuse_decision": {
+            "type": "string",
+            "enum": ["use_as_base", "inspect_first", "do_not_use", "fallback_only"]
+          },
+          "license_or_use_check": { "type": ["string", "null"] },
+          "local_path": { "type": ["string", "null"] },
+          "files_to_adapt": { "type": "array", "items": { "type": "string" } },
+          "setup_command": { "type": ["string", "null"] },
+          "toy_run_command": { "type": ["string", "null"] },
+          "patch_summary": { "type": ["string", "null"] },
+          "fallback": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "toy_execution": {
+      "type": "object",
+      "properties": {
+        "requires_user_approval": { "type": "boolean", "default": true },
+        "approval_status": {
+          "type": "string",
+          "enum": ["not_asked", "approved_setup_only", "approved_toy_run", "declined", "blocked"]
+        },
+        "environment": {
+          "type": "object",
+          "properties": {
+            "python": { "type": ["string", "null"] },
+            "package_manager": { "type": ["string", "null"] },
+            "setup_commands": { "type": "array", "items": { "type": "string" } },
+            "env_vars_required": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["step", "status"],
+            "properties": {
+              "step": { "type": "string" },
+              "command_or_action": { "type": ["string", "null"] },
+              "expected_output": { "type": ["string", "null"] },
+              "status": {
+                "type": "string",
+                "enum": ["planned", "running", "complete", "failed", "skipped", "blocked"]
+              },
+              "notes": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "experiment_id": { "type": "string" },
+              "metric": { "type": "string" },
+              "value": { "type": ["number", "string", "null"] },
+              "artifact": { "type": ["string", "null"] },
+              "interpretation": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "summary": { "type": ["string", "null"] },
+        "next_action": { "type": ["string", "null"] }
       }
     },
     "qualitative": { "type": "array", "items": { "type": "string" } },

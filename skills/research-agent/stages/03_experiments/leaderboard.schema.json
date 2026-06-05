@@ -12,6 +12,7 @@
       "paper_name": { "type": ["string", "null"] },
       "paper_url": { "type": ["string", "null"] },
       "huggingface_url": { "type": ["string", "null"] },
+      "github_url": { "type": ["string", "null"] },
       "source_table": { "type": ["string", "null"] },
       "dataset": { "type": "string" },
       "tier": { "type": ["string", "null"], "enum": ["toy", "full", "ablation", "sweep", "qualitative", null] },
@@ -30,6 +31,7 @@
         }
       },
       "runtime_or_cost": { "type": ["string", "null"] },
+      "gpu_hours": { "type": ["number", "string", "null"] },
       "status": { "type": "string" },
       "artifact": {
         "type": ["object", "null"],
