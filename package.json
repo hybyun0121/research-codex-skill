@@ -1,0 +1,11 @@
+{
+  "name": "research-codex-skill",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate-slides": "node skills/research-agent/scripts/generate_slides_polished.mjs"
+  },
+  "dependencies": {
+    "pptx-automizer": "^0.8.1"
+  }
+}
