@@ -19,8 +19,17 @@ If the tool is unavailable, use the same structure in plain text.
 
 For an empty repo:
 
-- recommended: ask for domain or let agent propose candidate questions from a domain
-- options: direct research question, domain-first discovery, venue/constraints first
+- recommended: ask whether to run a `goal instruction discussion` before Motivation
+- reason: an empty repo has no baseline, no prior state, and no research question, so a goal instruction can define automation scope before the agent starts topic discovery
+- first options: goal instruction discussion, direct research question, domain-first discovery
+
+If the user chooses goal instruction discussion:
+
+- discuss only details that affect automation behavior;
+- recommend 2-3 candidate `goal instruction` options at the end;
+- ask the user to select, merge, or customize one;
+- record the final choice in `.research-agent/decisions.jsonl`;
+- save selected outputs to `.research-agent/goal_instruction.md` and optionally `.research-agent/goal_instruction.json`.
 
 For a baseline repo:
 
@@ -41,4 +50,3 @@ Append material decisions to `.research-agent/decisions.jsonl` with:
 - question
 - selected_option
 - rationale
-

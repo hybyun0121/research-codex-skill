@@ -1,6 +1,6 @@
 ---
 name: research-agent
-description: Use this skill to run a portable, state-aware research agent inside the current repository. It inspects empty repos, existing research repos, and official baseline implementations; initializes or resumes `.research-agent/state.json`; and guides Motivation, Method, Experiments, HTML brief, and professor-facing English PPT slides with minimal generated files and safe user interaction.
+description: Use this skill to run a portable, state-aware research agent inside the current repository. It inspects empty repos, existing research repos, and official baseline implementations; initializes or resumes `.research-agent/state.json`; guides Motivation, Method, Experiments, HTML brief, and professor-facing English PPT slides; and can run an empty-repo goal-instruction discussion before starting research.
 ---
 
 # Research Agent
@@ -32,6 +32,10 @@ Load shared instruction files only when needed:
 - `instructions/repo-inspection.md`: empty repo, user project, official baseline, and partial run detection.
 - `instructions/user-interaction.md`: when and how to ask user questions.
 - `instructions/html-brief.md`: final readable HTML synthesis.
+
+## Goal Instructor
+
+For `empty_repo` starts, use `goal-instructor/instructions/goal-design.md` when the user chooses to discuss automation goals before starting Motivation. This produces candidate `goal instruction` options for topic selection, Method construction, toy Experiments, and slide/report creation.
 
 ## Scripts
 
