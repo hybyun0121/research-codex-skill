@@ -4,15 +4,173 @@
   "type": "object",
   "properties": {
     "claim": { "type": ["string", "null"] },
-    "inputs": { "type": "array", "items": { "type": "string" } },
-    "outputs": { "type": "array", "items": { "type": "string" } },
-    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "connection_to_motivation": {
+      "type": "object",
+      "properties": {
+        "selected_direction": { "type": ["string", "null"] },
+        "motivation_gap": { "type": ["string", "null"] },
+        "novelty_claim": { "type": ["string", "null"] },
+        "alignment_summary": { "type": ["string", "null"] }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "description": { "type": ["string", "null"] },
+              "shape_or_domain": { "type": ["string", "null"] }
+            },
+            "required": ["name"]
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "description": { "type": ["string", "null"] },
+              "shape_or_domain": { "type": ["string", "null"] }
+            },
+            "required": ["name"]
+          }
+        ]
+      }
+    },
+    "notation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "symbol": { "type": "string" },
+          "meaning": { "type": "string" },
+          "shape_or_domain": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        },
+        "required": ["symbol", "meaning"]
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": {
+              "statement": { "type": "string" },
+              "reason": { "type": ["string", "null"] },
+              "requires_user_confirmation": { "type": "boolean" }
+            },
+            "required": ["statement"]
+          }
+        ]
+      }
+    },
+    "constraints": { "type": "array", "items": { "type": "string" } },
     "formulation": { "type": ["string", "null"] },
     "objective": { "type": ["string", "null"] },
-    "algorithm": { "type": ["string", "null"] },
-    "visuals": { "type": "array", "items": { "type": "string" } },
-    "rigor_review": { "type": "array", "items": { "type": "string" } },
-    "comparison_to_prior_work": { "type": "array", "items": { "type": "string" } }
+    "algorithm": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" },
+        {
+          "type": "object",
+          "properties": {
+            "summary": { "type": ["string", "null"] },
+            "pseudocode": { "type": ["string", "null"] },
+            "steps": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      ]
+    },
+    "visuals": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": {
+              "target": { "type": "string" },
+              "components": { "type": "array", "items": { "type": "string" } },
+              "message": { "type": ["string", "null"] }
+            },
+            "required": ["target"]
+          }
+        ]
+      }
+    },
+    "plain_language_explanation": { "type": ["string", "null"] },
+    "rigor_review": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": {
+              "check": {
+                "type": "string",
+                "enum": [
+                  "undefined_symbols",
+                  "dimensional_consistency",
+                  "assumptions",
+                  "objective_validity",
+                  "data_leakage",
+                  "novelty_alignment",
+                  "motivation_alignment",
+                  "other"
+                ]
+              },
+              "status": { "type": "string", "enum": ["pass", "issue", "needs_user", "not_checked"] },
+              "finding": { "type": ["string", "null"] },
+              "action": { "type": ["string", "null"] }
+            },
+            "required": ["check", "status"]
+          }
+        ]
+      }
+    },
+    "comparison_to_prior_work": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": {
+              "prior_method": { "type": "string" },
+              "shared_idea": { "type": ["string", "null"] },
+              "difference": { "type": ["string", "null"] },
+              "why_it_matters": { "type": ["string", "null"] }
+            },
+            "required": ["prior_method"]
+          }
+        ]
+      }
+    },
+    "user_confirmation_required": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item": { "type": "string" },
+          "reason": { "type": "string" },
+          "decision_needed": { "type": ["string", "null"] }
+        },
+        "required": ["item", "reason"]
+      }
+    }
   }
 }
-
