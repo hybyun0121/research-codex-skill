@@ -4,17 +4,111 @@
   "type": "object",
   "properties": {
     "claims": { "type": "array", "items": { "type": "string" } },
+    "detail_html": {
+      "type": "object",
+      "description": "Companion HTML page linked from experiments.plan[].reference so shared rendering does not need script changes.",
+      "properties": {
+        "path": { "type": "string", "default": "research/experiments-detail.html" },
+        "brief_reference": { "type": "string", "default": "experiments-detail.html" },
+        "title": { "type": "string" },
+        "summary": { "type": "string" }
+      }
+    },
+    "baseline_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["paper", "venue_year", "task", "metric"],
+        "properties": {
+          "method_name": { "type": ["string", "null"] },
+          "paper": { "type": "string" },
+          "venue_year": { "type": "string" },
+          "main_table": { "type": ["string", "null"] },
+          "task": { "type": "string" },
+          "metric": { "type": "string" },
+          "why_competitive": { "type": ["string", "null"] },
+          "url": { "type": ["string", "null"] },
+          "huggingface_url": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "prior_result_leaderboard": {
+      "type": "array",
+      "description": "Published baseline rows reused from Motivation literature tables when relevant.",
+      "items": {
+        "type": "object",
+        "required": ["method_name", "paper", "dataset", "metric"],
+        "properties": {
+          "method_name": { "type": "string" },
+          "paper": { "type": "string" },
+          "source_table": { "type": ["string", "null"] },
+          "dataset": { "type": "string" },
+          "metric": { "type": "string" },
+          "reported_result": { "type": ["string", "number", "null"] },
+          "paper_url": { "type": ["string", "null"] },
+          "huggingface_url": { "type": ["string", "null"] },
+          "use_in_this_plan": { "type": ["string", "null"] }
+        }
+      }
+    },
     "plan": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
           "claim": { "type": "string" },
+          "tier": { "type": ["string", "null"], "enum": ["toy", "full", "both", null] },
           "dataset": { "type": "string" },
           "metric": { "type": "string" },
           "baseline": { "type": "string" },
           "evidence": { "type": "string" },
           "reference": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "toy_benchmarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dataset", "purpose", "metric"],
+        "properties": {
+          "dataset": { "type": "string" },
+          "purpose": { "type": "string" },
+          "subset_or_scale": { "type": ["string", "null"] },
+          "metric": { "type": "string" },
+          "expected_runtime": { "type": ["string", "null"] },
+          "success_criterion": { "type": ["string", "null"] },
+          "url": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "full_benchmarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dataset", "purpose", "metric", "baselines"],
+        "properties": {
+          "dataset": { "type": "string" },
+          "purpose": { "type": "string" },
+          "scale": { "type": ["string", "null"] },
+          "metric": { "type": "string" },
+          "baselines": { "type": "array", "items": { "type": "string" } },
+          "required_evidence": { "type": ["string", "null"] },
+          "url": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "ablations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "claim_isolated", "control_variant"],
+        "properties": {
+          "name": { "type": "string" },
+          "claim_isolated": { "type": "string" },
+          "control_variant": { "type": "string" },
+          "expected_signal": { "type": ["string", "null"] },
+          "failure_interpretation": { "type": ["string", "null"] }
         }
       }
     },
@@ -27,12 +121,40 @@
           "values": { "type": "array" },
           "default": {},
           "budget": { "type": ["string", "null"] },
-          "stopping_rule": { "type": ["string", "null"] }
+          "stopping_rule": { "type": ["string", "null"] },
+          "expected_signal": { "type": ["string", "null"] },
+          "failure_trigger": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "compute_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tier", "gpu_recommendation", "gpu_count"],
+        "properties": {
+          "tier": { "type": "string", "enum": ["toy", "full", "ablation", "sweep", "qualitative"] },
+          "gpu_recommendation": { "type": "string" },
+          "gpu_count": { "type": ["integer", "string"] },
+          "memory_need": { "type": ["string", "null"] },
+          "estimated_runtime": { "type": ["string", "null"] },
+          "parallelism": { "type": ["string", "null"] },
+          "fallback": { "type": ["string", "null"] },
+          "rationale": { "type": ["string", "null"] }
         }
       }
     },
     "qualitative": { "type": "array", "items": { "type": "string" } },
+    "reproducibility": {
+      "type": "object",
+      "properties": {
+        "code_snapshot": { "type": ["string", "null"] },
+        "data_split": { "type": ["string", "null"] },
+        "seeds": { "type": "array", "items": { "type": ["integer", "string"] } },
+        "logging_artifacts": { "type": "array", "items": { "type": "string" } },
+        "statistical_reporting": { "type": ["string", "null"] }
+      }
+    },
     "risks": { "type": "array", "items": { "type": "string" } }
   }
 }
-

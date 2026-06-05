@@ -7,15 +7,41 @@
     "required": ["experiment_id", "method_variant", "dataset", "status"],
     "properties": {
       "experiment_id": { "type": "string" },
+      "method_name": { "type": ["string", "null"] },
       "method_variant": { "type": "string" },
+      "paper_name": { "type": ["string", "null"] },
+      "paper_url": { "type": ["string", "null"] },
+      "huggingface_url": { "type": ["string", "null"] },
+      "source_table": { "type": ["string", "null"] },
       "dataset": { "type": "string" },
+      "tier": { "type": ["string", "null"], "enum": ["toy", "full", "ablation", "sweep", "qualitative", null] },
+      "seed": { "type": ["integer", "string", "null"] },
+      "split": { "type": ["string", "null"] },
+      "checkpoint": { "type": ["string", "null"] },
       "metrics": { "type": "object" },
+      "metric_direction": { "type": ["string", "null"], "enum": ["higher_is_better", "lower_is_better", "mixed", null] },
       "confidence_or_variance": { "type": ["string", "null"] },
+      "hardware": {
+        "type": ["object", "null"],
+        "properties": {
+          "gpu_model": { "type": ["string", "null"] },
+          "gpu_count": { "type": ["integer", "string", "null"] },
+          "memory": { "type": ["string", "null"] }
+        }
+      },
       "runtime_or_cost": { "type": ["string", "null"] },
       "status": { "type": "string" },
+      "artifact": {
+        "type": ["object", "null"],
+        "properties": {
+          "log_url": { "type": ["string", "null"] },
+          "config_url": { "type": ["string", "null"] },
+          "result_url": { "type": ["string", "null"] }
+        }
+      },
+      "failure_notes": { "type": ["string", "null"] },
       "notes": { "type": ["string", "null"] },
       "reference": { "type": ["string", "null"] }
     }
   }
 }
-
