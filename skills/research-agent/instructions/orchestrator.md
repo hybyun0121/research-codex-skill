@@ -48,11 +48,13 @@ When the current repository is `empty_repo` and no previous state exists:
    - whether code changes are allowed;
    - output language and slide/report expectations.
 5. Recommend 2-3 candidate `goal instruction` options.
-6. Ask the user to select, merge, or customize one.
+6. Ask the user to select, merge, or customize one using an ask-user-question style tool when available.
 7. Write selected outputs:
    - `.research-agent/goal_instruction.md`;
+   - `.research-agent/goal_command.txt`;
    - `.research-agent/goal_instruction.json` when structured output is useful.
-8. Continue to Motivation using the selected goal instruction as context.
+8. Tell the user that the selected instruction is designed to be pasted after Codex `/goal`.
+9. Continue to Motivation using the selected goal instruction as context when the user wants to proceed immediately.
 
 If the user declines, continue with the normal empty repo Motivation question.
 
@@ -77,10 +79,12 @@ Default outputs in the user's repo are:
 - `.research-agent/repo_profile.json`
 - `.research-agent/decisions.jsonl`
 - `.research-agent/goal_instruction.md` when selected
+- `.research-agent/goal_command.txt` when selected
 - `.research-agent/goal_instruction.json` when selected
 - `research/status.md`
 - `research/motivation.md`
 - `research/method.md`
 - `research/experiments.md`
 - `research/research-brief.html`
-- `slides/research-presentation.pptx` only at the final slide stage
+- `slides/slide-*.html`, `slides/viewer.html`, `slides/research-presentation.pdf`, and `slides/out-png/` at the final slide stage
+- `slides/research-presentation.pptx` only when optional experimental `slides-grab convert` output is requested

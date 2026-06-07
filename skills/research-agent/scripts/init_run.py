@@ -46,7 +46,12 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
         "slides": {
             "status": "blocked",
             "blocked_by": ["html_brief"],
-            "outputs": ["slides/research-presentation.pptx"],
+            "outputs": [
+                "slides/slide-01.html",
+                "slides/viewer.html",
+                "slides/research-presentation.pdf",
+                "slides/out-png/",
+            ],
         },
     }
     current_stage = "repo_inspection"
@@ -56,6 +61,7 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
             "blocked_by": ["user.goal_instruction_start_choice"],
             "outputs": [
                 ".research-agent/goal_instruction.md",
+                ".research-agent/goal_command.txt",
                 ".research-agent/goal_instruction.json",
             ],
         }
@@ -97,12 +103,17 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
         },
         "artifacts": {
             "goal_instruction_md": ".research-agent/goal_instruction.md",
+            "goal_command_txt": ".research-agent/goal_command.txt",
             "goal_instruction_json": ".research-agent/goal_instruction.json",
             "status_md": "research/status.md",
             "motivation_md": "research/motivation.md",
             "method_md": "research/method.md",
             "experiments_md": "research/experiments.md",
             "html_brief": "research/research-brief.html",
+            "slide_deck_dir": "slides",
+            "slide_viewer": "slides/viewer.html",
+            "slide_pdf": "slides/research-presentation.pdf",
+            "slide_png_dir": "slides/out-png",
             "slides": "slides/research-presentation.pptx",
         },
         "decisions": [],

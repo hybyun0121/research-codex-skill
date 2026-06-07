@@ -1,6 +1,6 @@
 ---
 name: research-agent
-description: Use this skill to run a portable, state-aware research agent inside the current repository. It inspects empty repos, existing research repos, and official baseline implementations; initializes or resumes `.research-agent/state.json`; guides Motivation, Method, Experiments, HTML brief, and professor-facing English PPT slides; and can run an empty-repo goal-instruction discussion before starting research.
+description: Use this skill to run a portable, state-aware research agent inside the current repository. It inspects empty repos, existing research repos, and official baseline implementations; initializes or resumes `.research-agent/state.json`; guides Motivation, Method, Experiments, HTML brief, and professor-facing English slides-grab slide reports; and can run an empty-repo goal-instruction discussion before starting research.
 ---
 
 # Research Agent
@@ -20,9 +20,9 @@ The research workflow is explicitly separated into four stage folders:
 - `stages/01_motivation/`: MCP-assisted paper discovery, literature landscape, novelty criteria, candidate scoring, gaps, and selected direction.
 - `stages/02_method/`: method claim, mathematical formulation, rigor review, pseudocode, and visuals.
 - `stages/03_experiments/`: benchmark planning, sweeps, leaderboard, and qualitative analysis.
-- `stages/04_slides/`: professor-facing English PPT creation with user template and Gothic A1.
+- `stages/04_slides/`: professor-facing English `slides-grab` HTML slides, PDF/PNG exports, optional experimental PPTX, and infographic-style visual reports.
 
-Each stage folder owns its stage instructions, schema files, and markdown or PPT template notes. Motivation also includes `mcp-requirements.md` because it depends on paper search, paper reading, citation graph, literature memory, and user decision capabilities.
+Each stage folder owns its stage instructions, schema files, and markdown/template notes. Motivation also includes `mcp-requirements.md` because it depends on paper search, paper reading, citation graph, literature memory, and user decision capabilities.
 
 ## Shared Instructions
 

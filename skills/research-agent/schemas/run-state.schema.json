@@ -57,12 +57,17 @@
       "type": "object",
       "properties": {
         "goal_instruction_md": { "type": "string" },
+        "goal_command_txt": { "type": "string" },
         "goal_instruction_json": { "type": "string" },
         "status_md": { "type": "string" },
         "motivation_md": { "type": "string" },
         "method_md": { "type": "string" },
         "experiments_md": { "type": "string" },
         "html_brief": { "type": "string" },
+        "slide_deck_dir": { "type": "string" },
+        "slide_viewer": { "type": "string" },
+        "slide_pdf": { "type": "string" },
+        "slide_png_dir": { "type": "string" },
         "slides": { "type": "string" }
       }
     },

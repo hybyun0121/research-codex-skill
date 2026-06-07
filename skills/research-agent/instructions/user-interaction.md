@@ -27,9 +27,10 @@ If the user chooses goal instruction discussion:
 
 - discuss only details that affect automation behavior;
 - recommend 2-3 candidate `goal instruction` options at the end;
-- ask the user to select, merge, or customize one;
+- ask the user to select, merge, or customize one using an ask-user-question style tool when available;
+- after selection, provide a `/goal` ready payload that the user can paste after Codex `/goal`;
 - record the final choice in `.research-agent/decisions.jsonl`;
-- save selected outputs to `.research-agent/goal_instruction.md` and optionally `.research-agent/goal_instruction.json`.
+- save selected outputs to `.research-agent/goal_instruction.md`, `.research-agent/goal_command.txt`, and optionally `.research-agent/goal_instruction.json`.
 
 For a baseline repo:
 

@@ -48,13 +48,19 @@ Look for:
 - `research/method.md`
 - `research/experiments.md`
 - `research/research-brief.html`
-- `slides/research-presentation.pptx`
+- `slides/slide-*.html`
+- `slides/viewer.html`
+- `slides/research-presentation.pdf`
+- `slides/out-png/`
+- `slides/research-presentation.pptx` when optional experimental PPTX export is requested
 
 If state exists, resume from the earliest incomplete or stale stage.
 
 If state does not exist, initialize it with `scripts/init_run.py`.
 
 If the repository is `empty_repo`, ask whether the user wants to start with a goal instruction discussion before Motivation. If yes, load `goal-instructor/instructions/goal-design.md`, discuss the automation target, then recommend multiple candidate goal instructions and ask the user to select one.
+
+Use an ask-user-question style tool when available for the final candidate selection. The selected result must be formatted as a payload the user can paste after Codex `/goal`.
 
 ## Repository Safety
 
@@ -98,6 +104,7 @@ Default generated files:
 - `.research-agent/repo_profile.json`
 - `.research-agent/decisions.jsonl`
 - `.research-agent/goal_instruction.md` when goal discussion is selected
+- `.research-agent/goal_command.txt` when goal discussion is selected
 - `.research-agent/goal_instruction.json` when goal discussion is selected
 - `research/status.md`
 - `research/motivation.md`
@@ -105,4 +112,4 @@ Default generated files:
 - `research/experiments.md`
 - `research/research-brief.html`
 
-Generate slides only when the user requests final presentation output or when all prior stages are complete.
+Generate slides only when the user requests final presentation output or when all prior stages are complete. Slides must use the `slides-grab` HTML-first workflow.

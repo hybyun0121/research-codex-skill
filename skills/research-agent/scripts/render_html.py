@@ -8,8 +8,6 @@ import html
 import json
 import os
 import re
-import shutil
-import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 from string import Template
@@ -35,41 +33,13 @@ def link(url: object, label: str = "source") -> str:
 
 @dataclass
 class SlideAssets:
+    deck_dir: Optional[Path] = None
+    viewer: Optional[Path] = None
     pptx: Optional[Path] = None
     pdf: Optional[Path] = None
     images: list[Path] = field(default_factory=list)
+    slide_html: list[Path] = field(default_factory=list)
     note: Optional[str] = None
-
-
-def command_path(names: tuple[str, ...]) -> Optional[str]:
-    for name in names:
-        found = shutil.which(name)
-        if found:
-            return found
-    return None
-
-
-def run_quiet(command: list[str]) -> Optional[str]:
-    try:
-        completed = subprocess.run(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            check=False,
-        )
-    except OSError as exc:
-        return str(exc)
-    if completed.returncode == 0:
-        return None
-    output = (completed.stderr or completed.stdout).strip()
-    if output:
-        return output.splitlines()[-1]
-    return f"command failed with exit code {completed.returncode}: {command[0]}"
-
-
-def stale(source: Path, target: Path) -> bool:
-    return not target.exists() or source.stat().st_mtime > target.stat().st_mtime
 
 
 def slide_sort_key(path: Path) -> tuple[int, str]:
@@ -84,49 +54,8 @@ def existing_slide_images(preview_dir: Path) -> list[Path]:
     )
 
 
-def convert_pptx_to_pdf(pptx: Path, pdf: Path) -> Optional[str]:
-    if not stale(pptx, pdf):
-        return None
-    office = command_path(("soffice", "libreoffice"))
-    if not office:
-        return "LibreOffice is not installed, so PPTX preview conversion was skipped."
-    pdf.parent.mkdir(parents=True, exist_ok=True)
-    return run_quiet(
-        [
-            office,
-            "--headless",
-            "--convert-to",
-            "pdf",
-            "--outdir",
-            str(pdf.parent),
-            str(pptx),
-        ]
-    )
-
-
-def convert_pdf_to_images(pdf: Path, preview_dir: Path) -> Optional[str]:
-    images = existing_slide_images(preview_dir)
-    if images and all(not stale(pdf, image) for image in images):
-        return None
-
-    pdftoppm = command_path(("pdftoppm",))
-    if not pdftoppm:
-        return "pdftoppm is not installed, so slide image previews were skipped."
-
-    preview_dir.mkdir(parents=True, exist_ok=True)
-    for image in existing_slide_images(preview_dir):
-        image.unlink()
-
-    return run_quiet(
-        [
-            pdftoppm,
-            "-png",
-            "-r",
-            "144",
-            str(pdf),
-            str(preview_dir / "slide"),
-        ]
-    )
+def existing_slide_html(deck_dir: Path) -> list[Path]:
+    return sorted(deck_dir.glob("slide-*.html"), key=lambda p: slide_sort_key(p.with_suffix(".png")))
 
 
 def infer_repo_root(state_path: Path) -> Path:
@@ -154,27 +83,33 @@ def prepare_slide_assets(
     output_path: Path,
     generate_previews: bool,
 ) -> SlideAssets:
-    pptx = artifact_path(repo_root, state, "slides", "slides/research-presentation.pptx")
-    if not pptx.exists():
-        return SlideAssets(note="Final slide deck has not been generated yet.")
+    deck_dir = artifact_path(repo_root, state, "slide_deck_dir", "slides")
+    if not deck_dir.exists():
+        return SlideAssets(note="Final slides-grab deck has not been generated yet.")
 
-    assets = SlideAssets(pptx=pptx)
-    pdf = pptx.with_suffix(".pdf")
-    preview_dir = output_path.parent / "assets" / "slides"
+    assets = SlideAssets(deck_dir=deck_dir)
+    assets.viewer = artifact_path(repo_root, state, "slide_viewer", "slides/viewer.html")
+    assets.pdf = artifact_path(repo_root, state, "slide_pdf", "slides/research-presentation.pdf")
+    assets.pptx = artifact_path(repo_root, state, "slides", "slides/research-presentation.pptx")
+    assets.slide_html = existing_slide_html(deck_dir)
+
+    if not assets.viewer.exists():
+        assets.viewer = None
+    if not assets.pdf.exists():
+        assets.pdf = None
+    if not assets.pptx.exists():
+        assets.pptx = None
 
     if not generate_previews:
-        assets.note = "Slide preview generation was disabled."
+        assets.note = "Slide preview discovery was disabled."
         return assets
 
-    conversion_note = convert_pptx_to_pdf(pptx, pdf)
-    if pdf.exists():
-        assets.pdf = pdf
-        image_note = convert_pdf_to_images(pdf, preview_dir)
-        assets.images = existing_slide_images(preview_dir)
-        assets.note = image_note or conversion_note
-    else:
-        assets.images = existing_slide_images(preview_dir)
-        assets.note = None if assets.images else conversion_note or "PPTX preview conversion did not produce a PDF."
+    preview_dir = artifact_path(repo_root, state, "slide_png_dir", "slides/out-png")
+    assets.images = existing_slide_images(preview_dir)
+    if not assets.images:
+        assets.images = existing_slide_images(output_path.parent / "assets" / "slides")
+    if not assets.images:
+        assets.note = "Run `slides-grab png --slides-dir slides --output-dir slides/out-png` to generate slide previews."
     return assets
 
 
@@ -263,20 +198,30 @@ def open_questions_html(items: object) -> str:
 
 
 def render_slides_section(assets: SlideAssets, output_path: Path) -> str:
-    if not assets.pptx:
+    if not assets.deck_dir:
         return f"""
 <section id="slides">
   <h2>Slides</h2>
-  <p class="muted">{esc(assets.note or 'Final slide deck has not been generated yet.')}</p>
+  <p class="muted">{esc(assets.note or 'Final slides-grab deck has not been generated yet.')}</p>
 </section>
 """
 
-    links = [
-        f'<a class="button-link" href="{esc(relative_href(output_path, assets.pptx))}">Download PPTX</a>'
-    ]
+    links = []
+    if assets.viewer:
+        links.append(
+            f'<a class="button-link" href="{esc(relative_href(output_path, assets.viewer))}">Open Slides Viewer</a>'
+        )
     if assets.pdf:
         links.append(
             f'<a class="button-link" href="{esc(relative_href(output_path, assets.pdf))}">Open PDF</a>'
+        )
+    if assets.pptx:
+        links.append(
+            f'<a class="button-link" href="{esc(relative_href(output_path, assets.pptx))}">Download Experimental PPTX</a>'
+        )
+    if not links:
+        links.append(
+            f'<a class="button-link" href="{esc(relative_href(output_path, assets.deck_dir))}">Open Slides Directory</a>'
         )
 
     if assets.images:
@@ -297,8 +242,19 @@ def render_slides_section(assets: SlideAssets, output_path: Path) -> str:
             f'<p class="muted">PDF preview is unavailable in this browser. <a href="{pdf_href}">Open PDF</a>.</p>'
             "</object>"
         )
+    elif assets.slide_html:
+        items = []
+        for index, slide in enumerate(assets.slide_html, start=1):
+            slide_href = esc(relative_href(output_path, slide))
+            items.append(
+                '<figure class="slide-card">'
+                f'<a href="{slide_href}"><div class="slide-html-thumb">HTML</div></a>'
+                f"<figcaption>Slide {index}</figcaption>"
+                "</figure>"
+            )
+        preview = '<div class="slide-grid">' + "".join(items) + "</div>"
     else:
-        preview = '<p class="muted">Slide preview is unavailable. Use the PPTX download link above.</p>'
+        preview = '<p class="muted">Slide preview is unavailable. Use slides-grab validate/png/pdf to complete exports.</p>'
 
     note = f'<p class="muted">{esc(assets.note)}</p>' if assets.note else ""
     return f"""
@@ -408,7 +364,7 @@ def main() -> None:
     parser.add_argument(
         "--no-slide-preview",
         action="store_true",
-        help="Do not convert PPTX slides to PDF or PNG previews.",
+        help="Do not discover slides-grab PNG/SVG previews.",
     )
     parser.add_argument(
         "--template",

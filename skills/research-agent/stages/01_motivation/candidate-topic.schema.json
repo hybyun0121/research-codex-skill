@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Candidate Research Topic",
+  "type": "object",
+  "required": ["direction", "scores", "handoff_to_method"],
+  "properties": {
+    "direction": { "type": "string" },
+    "problem_statement": { "type": "string" },
+    "prior_limitation": { "type": "string" },
+    "novelty_mechanism": { "type": "string" },
+    "closest_baselines": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "scores": {
+      "type": "object",
+      "required": ["worth_solving", "prior_limitation_clarity", "novelty_strength", "feasibility", "verifiability", "risk"],
+      "properties": {
+        "worth_solving": { "type": "number", "minimum": 0, "maximum": 5 },
+        "prior_limitation_clarity": { "type": "number", "minimum": 0, "maximum": 5 },
+        "novelty_strength": { "type": "number", "minimum": 0, "maximum": 5 },
+        "feasibility": { "type": "number", "minimum": 0, "maximum": 5 },
+        "verifiability": { "type": "number", "minimum": 0, "maximum": 5 },
+        "baseline_availability": { "type": "number", "minimum": 0, "maximum": 5 },
+        "risk": { "type": "number", "minimum": 0, "maximum": 5 }
+      }
+    },
+    "tradeoffs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "required_evidence": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "handoff_to_method": {
+      "type": "object",
+      "required": ["method_seed", "expected_intervention", "minimum_experiment_evidence"],
+      "properties": {
+        "method_seed": { "type": "string" },
+        "expected_intervention": { "type": "string" },
+        "minimum_experiment_evidence": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "open_questions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}
+

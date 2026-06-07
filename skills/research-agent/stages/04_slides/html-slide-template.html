@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${slide_title}</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #d7e0ea;
+      --paper: #ffffff;
+      --band: #f5f8fc;
+      --accent: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Gothic A1", Inter, Arial, sans-serif;
+    }
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 48px 64px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+    h1, h2, p { margin: 0; }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    h1 {
+      font-size: 48px;
+      line-height: 1.12;
+      max-width: 960px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-content: center;
+    }
+    .card {
+      border: 1px solid var(--line);
+      background: var(--band);
+      padding: 22px;
+      min-height: 180px;
+    }
+    .card h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .card p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    footer {
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="slide">
+    <header>
+      <p class="eyebrow">${eyebrow}</p>
+      <h1>${slide_title}</h1>
+    </header>
+    <section class="grid">
+      <article class="card">
+        <h2>${card_1_title}</h2>
+        <p>${card_1_body}</p>
+      </article>
+      <article class="card">
+        <h2>${card_2_title}</h2>
+        <p>${card_2_body}</p>
+      </article>
+      <article class="card">
+        <h2>${card_3_title}</h2>
+        <p>${card_3_body}</p>
+      </article>
+    </section>
+    <footer>${source_note}</footer>
+  </main>
+</body>
+</html>
+

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research Goal Instruction",
+  "type": "object",
+  "required": ["mission", "goal_command_payload", "workflow", "decision_gates", "outputs", "success_criteria", "stop_conditions"],
+  "properties": {
+    "mission": { "type": "string" },
+    "goal_command_payload": {
+      "type": "string",
+      "description": "The selected instruction text intended to be pasted after Codex /goal."
+    },
+    "goal_command": {
+      "type": "string",
+      "description": "The full /goal command form, including the /goal prefix."
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "repo_inspection": {
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean" },
+        "repo_types": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "safety_constraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "workflow": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stage", "goal"],
+        "properties": {
+          "stage": { "type": "string" },
+          "goal": { "type": "string" },
+          "required_outputs": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "decision_gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gate", "when_to_pause"],
+        "properties": {
+          "gate": { "type": "string" },
+          "when_to_pause": { "type": "string" },
+          "recommended_options": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "toy_experiment": {
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean" },
+        "scope": { "type": "string" },
+        "max_runtime": { "type": ["string", "null"] },
+        "allowed_code_changes": { "type": "boolean" },
+        "evidence_limitations_required": { "type": "boolean" }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "success_criteria": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "stop_conditions": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

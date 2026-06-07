@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Motivation Literature Landscape",
+  "type": "object",
+  "required": ["search_facets", "papers", "themes", "gaps"],
+  "properties": {
+    "search_facets": {
+      "type": "object",
+      "properties": {
+        "tasks": { "type": "array", "items": { "type": "string" } },
+        "method_families": { "type": "array", "items": { "type": "string" } },
+        "datasets": { "type": "array", "items": { "type": "string" } },
+        "failure_modes": { "type": "array", "items": { "type": "string" } },
+        "venues": { "type": "array", "items": { "type": "string" } },
+        "time_window": { "type": ["string", "null"] },
+        "keywords": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "papers": {
+      "type": "array",
+      "items": { "$ref": "paper.schema.json" }
+    },
+    "themes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "summary"],
+        "properties": {
+          "name": { "type": "string" },
+          "summary": { "type": "string" },
+          "paper_ids": { "type": "array", "items": { "type": "string" } },
+          "common_assumptions": { "type": "array", "items": { "type": "string" } },
+          "common_limitations": { "type": "array", "items": { "type": "string" } },
+          "representative_baselines": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gap", "evidence"],
+        "properties": {
+          "gap": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "affected_setting": { "type": ["string", "null"] },
+          "why_now": { "type": ["string", "null"] },
+          "risk": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Motivation Report",
+  "type": "object",
+  "required": [
+    "research_question",
+    "language_versions",
+    "tool_usage",
+    "landscape_summary",
+    "gaps",
+    "candidate_directions",
+    "selected_direction",
+    "handoff_to_method"
+  ],
+  "properties": {
+    "research_question": { "type": "string" },
+    "domain": { "type": ["string", "null"] },
+    "language_versions": {
+      "type": "object",
+      "required": ["english_report_path", "korean_report_path"],
+      "properties": {
+        "english_report_path": { "type": "string" },
+        "korean_report_path": { "type": "string" },
+        "primary_language": {
+          "type": "string",
+          "enum": ["english", "korean"]
+        },
+        "translation_notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "tool_usage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tool_name", "tool_type", "purpose", "used_for"],
+        "properties": {
+          "tool_name": { "type": "string" },
+          "tool_type": {
+            "type": "string",
+            "enum": ["mcp", "web", "local_script", "manual_import", "other"]
+          },
+          "provider": { "type": ["string", "null"] },
+          "purpose": { "type": "string" },
+          "used_for": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "queries_or_inputs": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "outputs_used": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "limitations": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "timestamp": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "landscape_summary": {
+      "type": "object",
+      "properties": {
+        "search_facets": { "type": "object" },
+        "themes": { "type": "array", "items": { "type": "object" } },
+        "main_baselines": { "type": "array", "items": { "type": "string" } },
+        "papers": { "type": "array", "items": { "$ref": "paper.schema.json" } }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gap", "evidence"],
+        "properties": {
+          "gap": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "why_it_matters": { "type": ["string", "null"] },
+          "risk": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "candidate_directions": {
+      "type": "array",
+      "items": { "$ref": "candidate-topic.schema.json" }
+    },
+    "selected_direction": { "type": "string" },
+    "handoff_to_method": {
+      "type": "object",
+      "properties": {
+        "problem_statement": { "type": "string" },
+        "prior_limitation": { "type": "string" },
+        "novelty_mechanism": { "type": "string" },
+        "closest_baselines": { "type": "array", "items": { "type": "string" } },
+        "method_seed": { "type": "string" },
+        "minimum_evidence": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
