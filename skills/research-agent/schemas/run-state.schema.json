@@ -11,11 +11,13 @@
       "properties": {
         "repo_type": {
           "type": "string",
-          "enum": ["unknown", "empty_repo", "existing_user_project", "official_baseline", "partial_research_agent_project"]
+          "enum": ["unknown", "empty_repo", "existing_user_project", "official_baseline", "baseline_working_project", "partial_research_agent_project"]
         },
         "repo_name": { "type": ["string", "null"] },
         "baseline_detected": { "type": "boolean" },
         "baseline_source": { "type": ["string", "null"] },
+        "import_recommended": { "type": "boolean" },
+        "import_signals": { "type": "array", "items": { "type": "string" } },
         "evidence": { "type": "array", "items": { "type": "string" } }
       }
     },
@@ -56,11 +58,14 @@
     "artifacts": {
       "type": "object",
       "properties": {
+        "project_import_json": { "type": "string" },
+        "project_import_md": { "type": "string" },
         "goal_instruction_md": { "type": "string" },
         "goal_command_txt": { "type": "string" },
         "goal_instruction_json": { "type": "string" },
         "status_md": { "type": "string" },
         "motivation_md": { "type": "string" },
+        "motivation_ko_md": { "type": "string" },
         "method_md": { "type": "string" },
         "experiments_md": { "type": "string" },
         "html_brief": { "type": "string" },

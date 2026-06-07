@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research Agent Project Import",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "repo",
+    "baseline",
+    "user_work",
+    "experiments",
+    "stage_reconstruction",
+    "open_questions"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "repo": {
+      "type": "object",
+      "required": ["name", "type", "root"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "root": { "type": "string" },
+        "remote_detected": { "type": "boolean" },
+        "branch": { "type": ["string", "null"] }
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "required": ["detected", "evidence"],
+      "properties": {
+        "detected": { "type": "boolean" },
+        "paper_links": { "type": "array", "items": { "type": "string" } },
+        "repo_evidence": { "type": "array", "items": { "type": "string" } },
+        "training_pipeline": { "type": "array", "items": { "type": "string" } },
+        "evaluation_pipeline": { "type": "array", "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "user_work": {
+      "type": "object",
+      "required": ["detected", "signals"],
+      "properties": {
+        "detected": { "type": "boolean" },
+        "signals": { "type": "array", "items": { "type": "string" } },
+        "modified_files": { "type": "array", "items": { "type": "string" } },
+        "candidate_method_files": { "type": "array", "items": { "type": "string" } },
+        "candidate_config_files": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "experiments": {
+      "type": "object",
+      "required": ["artifact_dirs", "result_files"],
+      "properties": {
+        "artifact_dirs": { "type": "array", "items": { "type": "string" } },
+        "result_files": { "type": "array", "items": { "type": "string" } },
+        "leaderboard_candidates": { "type": "array", "items": { "type": "string" } },
+        "sweep_candidates": { "type": "array", "items": { "type": "string" } },
+        "qualitative_candidates": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "stage_reconstruction": {
+      "type": "object",
+      "properties": {
+        "motivation": { "$ref": "#/$defs/stageImport" },
+        "method": { "$ref": "#/$defs/stageImport" },
+        "experiments": { "$ref": "#/$defs/stageImport" },
+        "html_brief": { "$ref": "#/$defs/stageImport" },
+        "slides": { "$ref": "#/$defs/stageImport" }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "blocks"],
+        "properties": {
+          "id": { "type": "string" },
+          "question": { "type": "string" },
+          "recommended_option": { "type": ["string", "null"] },
+          "options": { "type": "array", "items": { "type": "string" } },
+          "blocks": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stageImport": {
+      "type": "object",
+      "required": ["suggested_status", "evidence", "outputs"],
+      "properties": {
+        "suggested_status": {
+          "type": "string",
+          "enum": ["not_started", "in_progress", "blocked", "complete", "stale"]
+        },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "outputs": { "type": "array", "items": { "type": "string" } },
+        "blocked_by": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

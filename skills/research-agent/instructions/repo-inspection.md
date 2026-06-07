@@ -42,6 +42,13 @@ Never read credential files or files whose names contain `token`, `secret`, `cre
 - citation or paper link exists
 - train/eval scripts, configs, requirements, or checkpoints exist
 
+`baseline_working_project`:
+
+- official baseline evidence exists
+- user modifications, untracked files, new configs, notebooks, result folders, or experiment summaries exist
+- the project appears to contain both baseline code and user-applied Method/Experiments work
+- import mode should be offered before normal Motivation/Method/Experiments stages
+
 `partial_research_agent_project`:
 
 - `.research-agent/state.json` or research-agent artifacts exist
@@ -61,6 +68,14 @@ Write `.research-agent/repo_profile.json` with:
 - `risks`
 - `paper_links`
 - `license`
+- `import_recommended`
+- `import_signals`
+- `modified_files`
+- `candidate_method_files`
+- `candidate_config_files`
+- `experiment_artifact_dirs`
+- `result_files`
 
 For baseline repos, also create `research/repo-understanding.md` only when it materially helps later stages.
 
+For `baseline_working_project`, load `repo-ingestion/instructions/existing-project-import.md` before reconstructing stage artifacts.

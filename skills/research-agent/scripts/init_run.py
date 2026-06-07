@@ -23,10 +23,15 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
             "status": "complete",
             "outputs": [".research-agent/repo_profile.json"],
         },
+        "project_import": {
+            "status": "blocked",
+            "blocked_by": ["user.import_mode_confirmation"],
+            "outputs": [".research-agent/project_import.json", "research/project-import.md"],
+        },
         "motivation": {
             "status": "blocked",
             "blocked_by": ["research.question"],
-            "outputs": ["research/motivation.md"],
+            "outputs": ["research/motivation.md", "research/motivation.ko.md"],
         },
         "method": {
             "status": "blocked",
@@ -66,6 +71,13 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
             ],
         }
         current_stage = "goal_instruction"
+        stages["project_import"]["status"] = "not_started"
+        stages["project_import"]["blocked_by"] = []
+    elif repo_type == "baseline_working_project":
+        current_stage = "project_import"
+    else:
+        stages["project_import"]["status"] = "not_started"
+        stages["project_import"]["blocked_by"] = []
 
     return {
         "schema_version": "0.1.0",
@@ -74,6 +86,8 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
             "repo_name": profile.get("repo_name"),
             "baseline_detected": baseline_detected,
             "baseline_source": profile.get("baseline_source"),
+            "import_recommended": bool(profile.get("import_recommended")),
+            "import_signals": profile.get("import_signals", []),
             "evidence": profile.get("evidence", []),
         },
         "research": {
@@ -102,11 +116,14 @@ def default_state(profile: dict[str, object]) -> dict[str, object]:
             "stages": stages,
         },
         "artifacts": {
+            "project_import_json": ".research-agent/project_import.json",
+            "project_import_md": "research/project-import.md",
             "goal_instruction_md": ".research-agent/goal_instruction.md",
             "goal_command_txt": ".research-agent/goal_command.txt",
             "goal_instruction_json": ".research-agent/goal_instruction.json",
             "status_md": "research/status.md",
             "motivation_md": "research/motivation.md",
+            "motivation_ko_md": "research/motivation.ko.md",
             "method_md": "research/method.md",
             "experiments_md": "research/experiments.md",
             "html_brief": "research/research-brief.html",
@@ -164,9 +181,11 @@ def main() -> None:
         "# Research Agent Status\n\n"
         f"- Current stage: {state['workflow']['current_stage']}\n"
         f"- Repository type: {profile.get('repo_type')}\n"
+        f"- Existing project import recommended: {bool(profile.get('import_recommended'))}\n"
         "- Next action: resolve the first blocking research decision.\n",
     )
     write_if_missing(research_dir / "motivation.md", "# Motivation\n\nNot started.\n")
+    write_if_missing(research_dir / "motivation.ko.md", "# Motivation\n\n아직 시작하지 않았습니다.\n")
     write_if_missing(research_dir / "method.md", "# Method\n\nNot started.\n")
     write_if_missing(research_dir / "experiments.md", "# Experiments\n\nNot started.\n")
 

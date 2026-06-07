@@ -20,6 +20,7 @@ REQUIRED_TOP_LEVEL = {
 
 REQUIRED_STAGES = {
     "repo_inspection",
+    "project_import",
     "motivation",
     "method",
     "experiments",
@@ -76,4 +77,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

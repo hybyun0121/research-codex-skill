@@ -1,6 +1,6 @@
 ---
 name: research-agent
-description: Use this skill to run a portable, state-aware research agent inside the current repository. It inspects empty repos, existing research repos, and official baseline implementations; initializes or resumes `.research-agent/state.json`; guides Motivation, Method, Experiments, HTML brief, and professor-facing English slides-grab slide reports; and can run an empty-repo goal-instruction discussion before starting research.
+description: Use this skill to run a portable, state-aware research agent inside the current repository. It inspects empty repos, existing research repos, official baseline implementations, and user-modified baseline working projects; initializes or resumes `.research-agent/state.json`; guides Motivation, Method, Experiments, HTML brief, and professor-facing English slides-grab slide reports; can run an empty-repo goal-instruction discussion; and can import already-completed baseline work into research-agent artifacts.
 ---
 
 # Research Agent
@@ -37,12 +37,17 @@ Load shared instruction files only when needed:
 
 For `empty_repo` starts, use `goal-instructor/instructions/goal-design.md` when the user chooses to discuss automation goals before starting Motivation. This produces candidate `goal instruction` options for topic selection, Method construction, toy Experiments, and slide/report creation.
 
+## Existing Project Import
+
+For `baseline_working_project` starts, use `repo-ingestion/instructions/existing-project-import.md` when the user wants to organize an already-modified official baseline repo into research-agent artifacts. This reconstructs local work into `research/project-import.md`, Motivation, Method, Experiments, HTML brief, and slides-ready evidence without editing baseline code.
+
 ## Scripts
 
 Use scripts when deterministic file creation or validation is useful:
 
 - `scripts/inspect_repo.py`
 - `scripts/init_run.py`
+- `scripts/create_project_import.py`
 - `scripts/update_state.py`
 - `scripts/render_html.py`
 - `scripts/validate_state.py`

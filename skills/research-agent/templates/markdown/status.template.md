@@ -8,6 +8,7 @@ ${current_stage}
 
 - Type: ${repo_type}
 - Baseline detected: ${baseline_detected}
+- Existing project import recommended: ${import_recommended}
 
 ## Progress
 
@@ -21,4 +22,3 @@ ${current_stage}
 ## Next Action
 
 ${next_action}
-

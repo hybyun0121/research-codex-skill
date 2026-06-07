@@ -197,6 +197,45 @@ def open_questions_html(items: object) -> str:
     return card_grid(values, "No open questions recorded.")
 
 
+def render_project_import_section(
+    state: dict[str, object],
+    repo_root: Path,
+    output_path: Path,
+) -> str:
+    project = state.get("project") if isinstance(state.get("project"), dict) else {}
+    import_recommended = bool(project.get("import_recommended"))
+    signals = project.get("import_signals")
+    import_md = artifact_path(repo_root, state, "project_import_md", "research/project-import.md")
+    import_json = artifact_path(repo_root, state, "project_import_json", ".research-agent/project_import.json")
+
+    if not import_recommended and not import_md.exists() and not import_json.exists():
+        return ""
+
+    links = []
+    if import_md.exists():
+        links.append(
+            f'<a class="button-link" href="{esc(relative_href(output_path, import_md))}">Open Import Summary</a>'
+        )
+    if import_json.exists():
+        links.append(
+            f'<a class="button-link" href="{esc(relative_href(output_path, import_json))}">Open Import JSON</a>'
+        )
+    link_html = f'<div class="slide-links">{"".join(links)}</div>' if links else ""
+
+    return f"""
+<section id="project-import">
+  <div class="section-head">
+    <p class="eyebrow">Import</p>
+    <h2>Existing Project Import</h2>
+    <p>Baseline repository evidence, user Method changes, and experiment artifacts collected before reconstructing the research stages.</p>
+  </div>
+  {link_html}
+  <h3>Import Signals</h3>
+  {card_grid(signals, 'No import signals recorded yet.')}
+</section>
+"""
+
+
 def render_slides_section(assets: SlideAssets, output_path: Path) -> str:
     if not assets.deck_dir:
         return f"""
@@ -267,17 +306,20 @@ def render_slides_section(assets: SlideAssets, output_path: Path) -> str:
 """
 
 
-def render_body(state: dict[str, object], slide_assets: SlideAssets, output_path: Path) -> str:
+def render_body(state: dict[str, object], slide_assets: SlideAssets, repo_root: Path, output_path: Path) -> str:
     project = state.get("project") if isinstance(state.get("project"), dict) else {}
     research = state.get("research") if isinstance(state.get("research"), dict) else {}
     motivation = state.get("motivation") if isinstance(state.get("motivation"), dict) else {}
     method = state.get("method") if isinstance(state.get("method"), dict) else {}
     experiments = state.get("experiments") if isinstance(state.get("experiments"), dict) else {}
     workflow = state.get("workflow") if isinstance(state.get("workflow"), dict) else {}
+    project_import_section = render_project_import_section(state, repo_root, output_path)
+    project_import_nav = '<a href="#project-import">Import</a>' if project_import_section else ""
 
     return f"""
 <nav class="topbar">
   <a href="#brief">Brief</a>
+  {project_import_nav}
   <a href="#motivation">Motivation</a>
   <a href="#method">Method</a>
   <a href="#experiments">Experiments</a>
@@ -293,6 +335,7 @@ def render_body(state: dict[str, object], slide_assets: SlideAssets, output_path
     {claim_panel('Current Stage', workflow.get('current_stage') or 'unknown')}
   </div>
 </header>
+{project_import_section}
 <section id="motivation">
   <div class="section-head">
     <p class="eyebrow">Stage 1</p>
@@ -383,7 +426,7 @@ def main() -> None:
     slide_assets = prepare_slide_assets(state, repo_root, output_path, not args.no_slide_preview)
     html_text = template.safe_substitute(
         title=esc(title),
-        body=render_body(state, slide_assets, output_path),
+        body=render_body(state, slide_assets, repo_root, output_path),
     )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(html_text, encoding="utf-8")

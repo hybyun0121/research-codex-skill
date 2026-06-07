@@ -13,7 +13,9 @@ Design the brief as a polished research review page, not a raw markdown dump. Us
 Read accumulated outputs from:
 
 - `.research-agent/state.json`
+- `research/project-import.md`, when Existing Project Import was selected
 - `research/motivation.md`
+- `research/motivation.ko.md`, when available
 - `research/method.md`
 - `research/experiments.md`
 - `slides/slide-*.html`, when generated
@@ -27,12 +29,13 @@ These inputs are the outputs produced by stages 1-3 in the user's actual researc
 
 1. Research question and thesis
 2. Repository understanding, if relevant
-3. Motivation: landscape, gaps, selected direction
-4. Method: claim, formulation, algorithm, visual plan
-5. Experiments: benchmarks, sweeps, leaderboard, qualitative plan
-6. Open questions and risks
-7. Links and references
-8. Slides preview as the final section, when a `slides-grab` deck exists
+3. Existing Project Import: baseline identity, user work evidence, and artifact links, when relevant
+4. Motivation: landscape, gaps, selected direction
+5. Method: claim, formulation, algorithm, visual plan
+6. Experiments: benchmarks, sweeps, leaderboard, qualitative plan
+7. Open questions and risks
+8. Links and references
+9. Slides preview as the final section, when a `slides-grab` deck exists
 
 ## Synthesis Rules
 
